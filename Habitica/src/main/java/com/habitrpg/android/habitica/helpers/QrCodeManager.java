@@ -1,38 +1,28 @@
 package com.habitrpg.android.habitica.helpers;
 
-import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Environment;
 import android.support.v7.preference.PreferenceManager;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.mikepenz.materialize.color.Material;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
-import net.glxn.qrgen.android.QRCode;
-import net.glxn.qrgen.core.image.ImageType;
-
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -114,12 +104,12 @@ public class QrCodeManager {
 
         int qrCodeSize = (int)dipToPixels(400.0f);
 
-        Bitmap myBitmap = QRCode.from(this.content)
+       /* Bitmap myBitmap = QRCode.from(this.content)
                 .withErrorCorrection(ErrorCorrectionLevel.H)
                 .withColor(0xFF432874, 0xFFFFFFFF)
                 .withSize(qrCodeSize, qrCodeSize)
                 .bitmap();
-        qrCodeImageView.setImageBitmap(myBitmap);
+        qrCodeImageView.setImageBitmap(myBitmap);*/
     }
 
     public float dipToPixels(float dipValue) {

@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
-import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.ui.activities.BaseActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
@@ -68,7 +67,6 @@ public abstract class BaseFragment extends DialogFragment {
             if (displayedClassName != null) {
                 Map<String, Object> additionalData = new HashMap<>();
                 additionalData.put("page", displayedClassName);
-                AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData);
             }
         }
     }

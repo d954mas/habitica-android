@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/PS_contact_title" >
+
+    <PreferenceCategory
+        android:key="account_prefs"
+        android:title="@string/pref_account_header">
+
+        <PreferenceScreen
+            android:key="accountDetails"
+            android:order="1"
+            android:summary="Check your account details"
+            android:title="@string/account_details">
+
+            <PreferenceCategory android:title="Account Details">
+
+                <Preference
+                    android:key="@string/SP_username"
+                    android:persistent="false"
+                    android:selectable="true"
+                    android:shouldDisableView="false"
+                    android:summary="Login Name"
+                    android:title="Login Name"/>
+
+                <Preference
+                    android:key="@string/SP_email"
+                    android:persistent="false"
+                    android:selectable="true"
+                    android:shouldDisableView="false"
+                    android:summary="E-mail"
+                    android:title="E-mail"/>
+
+                <Preference
+                    android:key="@string/SP_userID"
+                    android:persistent="false"
+                    android:selectable="true"
+                    android:shouldDisableView="false"
+                    android:summary="@string/SP_userID_summary"
+                    android:title="@string/SP_userID_title"/>
+
+                <Preference
+                    android:key="@string/SP_APIToken"
+                    android:persistent="false"
+                    android:selectable="true"
+                    android:shouldDisableView="false"
+                    android:summary="@string/SP_APIToken_summary"
+                    android:title="@string/SP_APIToken_title"/>
+
+                <Preference
+                    android:key="@string/SP_user_qr_code"
+                    android:persistent="false"
+                    android:selectable="true"
+                    android:shouldDisableView="false"
+                    android:summary="@string/SP_user_qr_code"
+                    android:title="@string/SP_user_qr_code"/>
+
+            </PreferenceCategory>
+
+        </PreferenceScreen>
+
+        <Preference
+            android:key="choose_class"
+            android:order="2"/>
+
+        <ListPreference
+            android:entries="@array/weekdays"
+            android:entryValues="@array/weekdayValues"
+            android:key="@string/pref_first_day_of_the_week_key"
+            android:order="5"
+            android:summary="@string/pref_first_day_of_the_week_summary"
+            android:title="@string/pref_first_day_of_the_week_title"/>
+        <ListPreference
+            android:entries="@array/Language"
+            android:entryValues="@array/LanguageValues"
+            android:key="language"
+            android:order="4"
+            android:summary="@string/Language_summary"
+            android:title="@string/Language_title"/>
+        <ListPreference
+            android:entries="@array/AudioThemes"
+            android:entryValues="@array/AudioValues"
+            android:key="audioTheme"
+            android:order="3"
+            android:summary="@string/AudioTheme_summary"
+            android:title="@string/AudioTheme_title"/>
+        <Preference
+            android:key="logout"
+            android:order="99"
+            android:summary="@string/logout_description"
+            android:title="@string/logout"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_reminder_header">
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="use_reminder"
+            android:title="@string/pref_reminder_checkbox"/>
+
+        <com.habitrpg.android.habitica.prefs.TimePreference
+            android:defaultValue="19:30"
+            android:key="reminder_time"
+            android:title="@string/pref_reminder_picker" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:title="@string/pref_cds_header">
+
+        <com.habitrpg.android.habitica.prefs.TimePreference
+            android:defaultValue="00:00"
+            android:key="cds_time"
+            android:title="@string/pref_cds_picker"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/push_notifications">
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="usePushNotifications"
+            android:title="@string/pref_push_notifications_checkbox"/>
+
+        <PreferenceScreen
+            android:key="pushNotifications"
+            android:order="1"
+            android:summary="Set your push notifications settings"
+            android:title="@string/push_notifications">
+
+            <PreferenceCategory android:title="Push Notifications">
+
+                <CheckBoxPreference
+                    android:defaultValue="true"
+                    android:key="preference_push_you_won_challenge"
+                    android:title="@string/preference_push_you_won_challenge"/>
+
+                <CheckBoxPreference
+                    android:defaultValue="true"
+                    android:key="preference_push_received_a_private_message"
+                    android:title="@string/preference_push_received_a_private_message"/>
+
+                <CheckBoxPreference
+                    android:defaultValue="true"
+                    android:key="preference_push_gifted_gems"
+                    android:title="@string/preference_push_gifted_gems"/>
+
+                <CheckBoxPreference
+                    android:defaultValue="true"
+                    android:key="preference_push_gifted_subscription"
+                    android:title="@string/preference_push_gifted_subscription"/>
+
+                <CheckBoxPreference
+                    android:defaultValue="true"
+                    android:key="preference_push_invited_to_party"
+                    android:title="@string/preference_push_invited_to_party"/>
+
+                <CheckBoxPreference
+                    android:defaultValue="true"
+                    android:key="preference_push_invited_to_guild"
+                    android:title="@string/preference_push_invited_to_guild"/>
+
+                <CheckBoxPreference
+                    android:defaultValue="true"
+                    android:key="preference_push_your_quest_has_begun"
+                    android:title="@string/preference_push_your_quest_has_begun"/>
+
+                <CheckBoxPreference
+                    android:defaultValue="true"
+                    android:key="preference_push_invited_to_quest"
+                    android:title="@string/preference_push_invited_to_quest"/>
+
+
+            </PreferenceCategory>
+
+        </PreferenceScreen>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

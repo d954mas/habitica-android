@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:bind="http://schemas.android.com/apk/res-auto"
+    >
+    <data>
+        <import type="java.util.Map"/>
+        <import type="com.magicmicky.habitrpgwrapper.lib.models.Outfit" />
+        <variable name="categorytitle" type="String"/>
+        <variable name="outfit" type="Outfit"/>
+        <variable
+            name="equipmentNames"
+            type="Map&lt;String, String>" />
+    </data>
+        <android.support.v7.widget.CardView
+            style="@style/CardView.Default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="?android:listDivider"
+                android:orientation="vertical"
+                android:showDividers="middle">
+
+                <include
+                    android:id="@+id/outfit_head"
+                    layout="@layout/item_image_row"
+                    bind:imageNamed='@{"shop_"+outfit.getHead}'
+                    bind:title="@{@string/outfit_head}"
+                    bind:value="@{equipmentNames.get(outfit.getHead)}"/>
+
+                <include
+                    android:id="@+id/outfit_head_accessory"
+                    layout="@layout/item_image_row"
+                    bind:imageNamed='@{"shop_"+outfit.getHeadAccessory}'
+                    bind:title="@{@string/outfit_headAccessory}"
+                    bind:value="@{equipmentNames.get(outfit.getHeadAccessory)}"/>
+
+                <include
+                    android:id="@+id/outfit_Eyewear"
+                    layout="@layout/item_image_row"
+                    bind:imageNamed='@{"shop_"+outfit.getEyeWear}'
+                    bind:title="@{@string/outfit_eyewear}"
+                    bind:value="@{equipmentNames.get(outfit.getEyeWear)}"/>
+
+                <include
+                    android:id="@+id/outfit_Armor"
+                    layout="@layout/item_image_row"
+                    bind:imageNamed='@{"shop_"+outfit.getArmor}'
+                    bind:title="@{@string/outfit_armor}"
+                    bind:value='@{equipmentNames.get(outfit.getArmor)}'/>
+
+                <include
+                    android:id="@+id/outfit_back"
+                    layout="@layout/item_image_row"
+                    bind:imageNamed='@{"shop_"+outfit.getBack}'
+                    bind:title="@{@string/outfit_back}"
+                    bind:value="@{equipmentNames.get(outfit.getBack)}"/>
+
+                <include
+                    android:id="@+id/outfit_Body"
+                    layout="@layout/item_image_row"
+                    bind:imageNamed='@{"shop_"+outfit.getBody}'
+                    bind:title="@{@string/outfit_body}"
+                    bind:value="@{equipmentNames.get(outfit.getBody)}"/>
+
+                <include
+                    android:id="@+id/outfit_weapon"
+                    layout="@layout/item_image_row"
+                    bind:imageNamed='@{"shop_"+outfit.getWeapon}'
+                    bind:title="@{@string/outfit_weapon}"
+                    bind:value="@{equipmentNames.get(outfit.getWeapon)}"/>
+
+                <include
+                    android:id="@+id/outfit_shield"
+                    layout="@layout/item_image_row"
+                    bind:imageNamed='@{"shop_"+outfit.getShield}'
+                    bind:title="@{@string/outfit_shield}"
+                    bind:value="@{equipmentNames.get(outfit.getShield)}"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+</layout>

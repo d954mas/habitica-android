@@ -1,12 +1,14 @@
 package com.habitrpg.android.habitica.ui.menu;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.support.v7.widget.Toolbar;
+
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.activities.AboutActivity;
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.NewsFragment;
 import com.habitrpg.android.habitica.ui.fragments.faq.FAQOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarOverviewFragment;
@@ -25,10 +27,6 @@ import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.support.v7.widget.Toolbar;
 
 import static com.habitrpg.android.habitica.ui.activities.MainActivity.GEM_PURCHASE_REQUEST;
 
@@ -159,7 +157,7 @@ public class MainDrawerBuilder {
                             break;
                         }
                         case SIDEBAR_SETTINGS: {
-                            newActivityClass = PrefsActivity.class;
+                            //newActivityClass = PrefsActivity.class;
                             break;
                         }
                         case SIDEBAR_HELP: {

@@ -1,11 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.fragments.AboutFragment;
-import com.mikepenz.aboutlibraries.Libs;
-import com.mikepenz.aboutlibraries.LibsBuilder;
-
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,6 +8,10 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.ui.fragments.AboutFragment;
 
 import butterknife.BindView;
 
@@ -47,7 +45,7 @@ public class AboutActivity extends BaseActivity {
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), 2);
+        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), 1);
         pager.setAdapter(adapter);
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         pager.setOffscreenPageLimit(1);
@@ -108,18 +106,6 @@ public class AboutActivity extends BaseActivity {
                 case 0:
 
                     return new AboutFragment();
-                case 1:
-                    return new LibsBuilder()
-                            //Pass the fields of your application to the lib so it can find all external lib information
-                            .withFields(R.string.class.getFields())
-                            .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
-                            .withAboutAppName(getString(R.string.app_name))
-                            .withAboutDescription("<h2>Used Libraries</h2>")
-                            .withAboutIconShown(true)
-                            .withAboutVersionShown(true)
-                            .withAboutVersionShownCode(true)
-                            .withAboutVersionShownName(true)
-                            .supportFragment();
                 default:
                     return null;
             }
@@ -129,11 +115,7 @@ public class AboutActivity extends BaseActivity {
         public CharSequence getPageTitle(int position) {
             if (position == 0) {
                 return getString(R.string.about_title);
-            } else if (position == 1) {
-                return getString(R.string.about_libraries);
             }
-
-
             return getString(R.string.about_versionhistory);
         }
 

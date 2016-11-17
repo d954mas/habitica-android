@@ -1,3 +1,0 @@
-
-
-my Habitica User-ID:

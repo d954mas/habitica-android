@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="7dp"
+        android:text="Chat"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/material_drawer_primary_text" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/emoji.toggle.btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/transparent"
+            android:contentDescription="Toogle Emojis"
+            android:scaleType="center"
+            android:src="@drawable/ic_emoticon_grey600_24dp"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:minHeight="72dp"
+            app:hintTextAppearance="@style/TextAppearance.AppCompat">
+
+            <net.pherth.android.emoji_library.EmojiEditText
+                android:id="@+id/edit.new.message.text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:hint="@string/write_message"
+                android:inputType="textCapSentences|textMultiLine"
+                android:textColor="@android:color/black"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn.send.message"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:drawableTint="@color/white"
+            android:text="@string/post"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+</LinearLayout>

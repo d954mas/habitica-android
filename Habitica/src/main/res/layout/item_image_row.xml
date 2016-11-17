@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="title" type="String"/>
+        <variable name="value" type="String"/>
+        <variable name="valueInt" type="int"/>
+        <variable name="imageNamed" type="String"/>
+    </data>
+        <LinearLayout
+            style="@style/RowWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true">
+            <ImageView
+                android:layout_width="@dimen/gear_image_size"
+                android:layout_height="@dimen/gear_image_size"
+                android:layout_marginRight="@dimen/row_padding"
+                android:alpha="@{imageNamed == null ? 0.4f : 1.0f}"
+                android:contentDescription="@{imageNamed}"
+                android:scaleType="fitEnd"
+                bind:imageName='@{imageNamed == null ? "head_0" : imageNamed}'/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+                <TextView
+                    style="@style/RowTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{title}"
+                    tools:text="Title"/>
+                <TextView
+                    style="@style/RowText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{value != null ? value : (valueInt != 0 ? String.valueOf(valueInt) : @string/avatar_nothing)}"
+                    tools:text="Value"/>
+            </LinearLayout>
+        </LinearLayout>
+</layout>

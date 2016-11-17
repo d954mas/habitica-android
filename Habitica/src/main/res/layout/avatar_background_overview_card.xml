@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="text" type="String"/>
+        <variable name="notes" type="String"/>
+        <variable name="imageNamed" type="String"/>
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selection_highlight"
+        android:clickable="true"
+        android:minHeight="60dp"
+        android:padding="5dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp">
+        <ImageView
+            android:layout_width="@dimen/avatar_width"
+            android:layout_height="@dimen/avatar_height"
+            android:alpha="@{imageNamed == null ? 0.4f : 1.0f}"
+            android:contentDescription="@{imageNamed}"
+            android:scaleType="fitEnd"
+            bind:imageName='@{imageNamed == null ? "head_0" : imageNamed}'/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@{text != null ? text : @string/avatar_nothing}"
+                android:textStyle="bold"
+                tools:text="Text"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@{notes}"
+                android:textColor="@android:color/darker_gray"
+                tools:text="Value"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

@@ -1,26 +1,7 @@
 package com.habitrpg.android.habitica;
 
-import com.amplitude.api.Amplitude;
-import com.facebook.FacebookSdk;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.components.DaggerAppComponent;
-import com.habitrpg.android.habitica.helpers.PurchaseTypes;
-import com.habitrpg.android.habitica.modules.AppModule;
-import com.habitrpg.android.habitica.ui.activities.IntroActivity;
-import com.habitrpg.android.habitica.ui.activities.LoginActivity;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.raizlabs.android.dbflow.config.FlowManager;
-import com.squareup.leakcanary.LeakCanary;
-
-import org.solovyev.android.checkout.Billing;
-import org.solovyev.android.checkout.Cache;
-import org.solovyev.android.checkout.Checkout;
-import org.solovyev.android.checkout.ProductTypes;
-import org.solovyev.android.checkout.Products;
-import org.solovyev.android.checkout.PurchaseVerifier;
-
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,8 +15,23 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.multidex.MultiDexApplication;
 import android.util.Log;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.helpers.PurchaseTypes;
+import com.habitrpg.android.habitica.ui.activities.IntroActivity;
+import com.habitrpg.android.habitica.ui.activities.LoginActivity;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.raizlabs.android.dbflow.config.FlowManager;
+import com.squareup.leakcanary.LeakCanary;
+
+import org.solovyev.android.checkout.Billing;
+import org.solovyev.android.checkout.Cache;
+import org.solovyev.android.checkout.Checkout;
+import org.solovyev.android.checkout.ProductTypes;
+import org.solovyev.android.checkout.Products;
+import org.solovyev.android.checkout.PurchaseVerifier;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -45,15 +41,15 @@ import javax.inject.Inject;
 import dagger.Lazy;
 
 //contains all HabiticaApplicationLogic except dagger componentInitialisation
-public abstract class HabiticaBaseApplication extends MultiDexApplication {
+public abstract class HabiticaBaseApplication extends Application {
 
     public static HabitRPGUser User;
     public static Activity currentActivity = null;
+    private static AppComponent component;
     @Inject
     Lazy<APIHelper> lazyApiHelper;
     @Inject
     SharedPreferences sharedPrefs;
-    private static AppComponent component;
     /**
      * For better performance billing class should be used as singleton
      */
@@ -118,6 +114,10 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
 
     // region SQLite overrides
 
+    public static AppComponent getComponent() {
+        return component;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -129,9 +129,6 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         createBillingAndCheckout();
         registerActivityLifecycleCallbacks();
 
-        if (!BuildConfig.DEBUG) {
-            Amplitude.getInstance().initialize(this, getString(R.string.amplitude_app_id)).enableForegroundTracking(this);
-        }
 
         Fresco.initialize(this);
         checkIfNewVersion();
@@ -186,14 +183,14 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         try {
             ApplicationInfo ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
             Bundle bundle = ai.metaData;
-            fbApiKey = bundle.getString(FacebookSdk.APPLICATION_ID_PROPERTY);
+            // fbApiKey = bundle.getString(FacebookSdk.APPLICATION_ID_PROPERTY);
         } catch (PackageManager.NameNotFoundException e) {
             Log.e("FB Error", "Failed to load meta-data, NameNotFound: " + e.getMessage());
         } catch (NullPointerException e) {
             Log.e("FB Error", "Failed to load meta-data, NullPointer: " + e.getMessage());
         }
         if (fbApiKey != null) {
-            FacebookSdk.sdkInitialize(getApplicationContext());
+            //FacebookSdk.sdkInitialize(getApplicationContext());
         }
     }
 
@@ -256,6 +253,10 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         return super.openOrCreateDatabase(getDatabasePath(name).getAbsolutePath(), mode, factory, errorHandler);
     }
 
+    // endregion
+
+    // region IAP - Specific
+
     @Override
     public boolean deleteDatabase(String name) {
         if (!name.endsWith(".db")) {
@@ -281,10 +282,6 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
 
         return deleted;
     }
-
-    // endregion
-
-    // region IAP - Specific
 
     // Hack for DBFlow - Not deleting Database
     // https://github.com/kaeawc/dbflow-sample-app/blob/master/app/src/main/java/io/kaeawc/flow/app/ui/MainActivityFragment.java#L201
@@ -339,14 +336,10 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         checkout = Checkout.forApplication(billing, Products.create().add(ProductTypes.IN_APP, PurchaseTypes.allTypes));
     }
 
+    // endregion
+
     @NonNull
     public Checkout getCheckout() {
         return checkout;
-    }
-
-    // endregion
-
-    public static AppComponent getComponent() {
-        return component;
     }
 }
