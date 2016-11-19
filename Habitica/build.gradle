@@ -133,7 +133,6 @@ dependencies {
     compile('com.mikepenz:materialdrawer:5.3.6@aar') {
         transitive = true
     }
-    compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.github.viirus:emoji-lib:0.0.3.2'
     compile 'com.commonsware.cwac:anddown:0.2.4'
     compile 'com.github.clans:fab:1.6.4'
