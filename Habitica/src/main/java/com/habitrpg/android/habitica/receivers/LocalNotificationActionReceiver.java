@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
@@ -31,7 +30,7 @@ public class LocalNotificationActionReceiver extends BroadcastReceiver implement
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        HabiticaApplication.getInstance(context).getComponent().inject(this);
+        HabiticaApplication.getComponent().inject(this);
         this.resources = context.getResources();
 
         this.action = intent.getAction();

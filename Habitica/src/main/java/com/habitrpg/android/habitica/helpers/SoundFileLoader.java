@@ -1,24 +1,8 @@
 package com.habitrpg.android.habitica.helpers;
 
-import com.habitrpg.android.habitica.HabiticaApplication;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okio.BufferedSink;
-import okio.Okio;
-import rx.Observable;
-import rx.exceptions.OnErrorThrowable;
-import rx.schedulers.Schedulers;
-
 // based on http://stackoverflow.com/questions/29838565/downloading-files-using-okhttp-okio-and-rxjava
 public class SoundFileLoader {
-    OkHttpClient client;
+    /*OkHttpClient client;
 
     public SoundFileLoader(){
         client = new OkHttpClient();
@@ -74,5 +58,5 @@ public class SoundFileLoader {
 
     public String getFullAudioFilePath(SoundFile soundFile) {
         return getExternalCacheDir() + File.separator + soundFile.getFilePath();
-    }
+    }*/
 }

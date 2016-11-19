@@ -1,12 +1,9 @@
 package com.habitrpg.android.habitica.helpers;
 
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.util.Log;
 
-import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +11,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import rx.Observable;
-import rx.schedulers.Schedulers;
 
 public class SoundManager {
     public static String SoundAchievementUnlocked = "Achievement_Unlocked";
@@ -37,7 +33,7 @@ public class SoundManager {
     private HashMap<String, SoundFile> loadedSoundFiles;
 
     public SoundManager(){
-        HabiticaApplication.getInstance(HabiticaApplication.currentActivity).getComponent().inject(this);
+        HabiticaBaseApplication.getComponent().inject(this);
 
         loadedSoundFiles = new HashMap<>();
     }
@@ -47,7 +43,7 @@ public class SoundManager {
     }
 
     public Observable<List<SoundFile>> preloadAllFiles() {
-        if(soundTheme == "off") {
+       /*if(soundTheme == "off") {
             return Observable.empty();
         }
 
@@ -63,7 +59,8 @@ public class SoundManager {
         soundFiles.add(new SoundFile(soundTheme, SoundPlusHabit));
         soundFiles.add(new SoundFile(soundTheme, SoundReward));
         soundFiles.add(new SoundFile(soundTheme, SoundTodo));
-        return soundFileLoader.download(soundFiles);
+        return soundFileLoader.download(soundFiles);*/
+        return Observable.just(new ArrayList<>());
     }
 
     public void clearLoadedFiles(){
@@ -82,13 +79,13 @@ public class SoundManager {
             ArrayList<SoundFile> soundFiles = new ArrayList<>();
 
             soundFiles.add(new SoundFile(soundTheme, type));
-            soundFileLoader.download(soundFiles).observeOn(Schedulers.newThread()).subscribe(audioFiles1 -> {
+            /*soundFileLoader.download(soundFiles).observeOn(Schedulers.newThread()).subscribe(audioFiles1 -> {
                 SoundFile file = soundFiles.get(0);
 
                 loadedSoundFiles.put(type, file);
                 file.play();
 
-            }, throwable -> throwable.printStackTrace());
+            }, throwable -> throwable.printStackTrace());*/
         }
     }
 

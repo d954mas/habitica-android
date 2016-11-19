@@ -1,7 +1,16 @@
 package com.habitrpg.android.habitica.widget;
 
+import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.RemoteViews;
+
 import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
@@ -13,16 +22,6 @@ import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
-
-import android.app.PendingIntent;
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.RemoteViews;
 
 import javax.inject.Inject;
 
@@ -42,8 +41,7 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
 
     private void setUp(Context context) {
         if (apiHelper == null) {
-            HabiticaBaseApplication application = HabiticaApplication.getInstance(context);
-            application.getComponent().inject(this);
+            HabiticaBaseApplication.getComponent().inject(this);
         }
     }
 

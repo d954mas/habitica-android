@@ -5,7 +5,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.DatabaseErrorHandler;
@@ -14,24 +13,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.helpers.PurchaseTypes;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
 import com.habitrpg.android.habitica.ui.activities.LoginActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.squareup.leakcanary.LeakCanary;
-
-import org.solovyev.android.checkout.Billing;
-import org.solovyev.android.checkout.Cache;
-import org.solovyev.android.checkout.Checkout;
-import org.solovyev.android.checkout.ProductTypes;
-import org.solovyev.android.checkout.Products;
-import org.solovyev.android.checkout.PurchaseVerifier;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -42,32 +32,47 @@ import dagger.Lazy;
 
 //contains all HabiticaApplicationLogic except dagger componentInitialisation
 public abstract class HabiticaBaseApplication extends Application {
-
+    //todo remove static
     public static HabitRPGUser User;
     public static Activity currentActivity = null;
     private static AppComponent component;
-    @Inject
-    Lazy<APIHelper> lazyApiHelper;
-    @Inject
-    SharedPreferences sharedPrefs;
-    /**
-     * For better performance billing class should be used as singleton
-     */
-    @NonNull
-    private Billing billing;
-    /**
-     * Application wide {@link Checkout} instance (can be used
-     * anywhere in the app).
-     * This instance contains all available products in the app.
-     */
-    @NonNull
-    private Checkout checkout;
+    @Inject Lazy<APIHelper> lazyApiHelper;
+    @Inject SharedPreferences sharedPrefs;
 
-    public static HabiticaBaseApplication getInstance(Context context) {
-        return (HabiticaBaseApplication) context.getApplicationContext();
+    public static void logout(Context context) {
+        HabiticaBaseApplication application = (HabiticaBaseApplication) context.getApplicationContext();
+        application.deleteDatabase(HabitDatabase.NAME);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean use_reminder = preferences.getBoolean("use_reminder", false);
+        String reminder_time = preferences.getString("reminder_time", "19:00");
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.putBoolean("use_reminder", use_reminder);
+        editor.putString("reminder_time", reminder_time);
+        editor.apply();
+        application.lazyApiHelper.get().updateAuthenticationCredentials(null, null);
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
-    public static boolean exists(@NonNull Context context) {
+    public static boolean checkUserAuthentication(Context context, HostConfig hostConfig) {
+        if (hostConfig == null || hostConfig.getApi() == null || hostConfig.getApi().equals("") || hostConfig.getUser() == null || hostConfig.getUser().equals("")) {
+            Intent intent = new Intent(context, IntroActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+            return false;
+        }
+        return true;
+    }
+
+    public static AppComponent getComponent() {
+        return component;
+    }
+
+    // region SQLite overrides
+
+    private boolean exists(@NonNull Context context) {
         try {
             File dbFile = context.getDatabasePath(String.format("%s.db", HabitDatabase.NAME));
             return dbFile.exists();
@@ -77,59 +82,14 @@ public abstract class HabiticaBaseApplication extends Application {
         }
     }
 
-    private static void setFinalStatic(Field field, Object newValue) throws NoSuchFieldException, IllegalAccessException {
-        field.setAccessible(true);
-        field.set(null, newValue);
-    }
-
-    public static void logout(Context context) {
-        getInstance(context).deleteDatabase(HabitDatabase.NAME);
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean use_reminder = preferences.getBoolean("use_reminder", false);
-        String reminder_time = preferences.getString("reminder_time", "19:00");
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.clear();
-        editor.putBoolean("use_reminder", use_reminder);
-        editor.putString("reminder_time", reminder_time);
-        editor.apply();
-        getInstance(context).lazyApiHelper.get().updateAuthenticationCredentials(null, null);
-        startActivity(LoginActivity.class, context);
-    }
-
-    public static boolean checkUserAuthentication(Context context, HostConfig hostConfig) {
-        if (hostConfig == null || hostConfig.getApi() == null || hostConfig.getApi().equals("") || hostConfig.getUser() == null || hostConfig.getUser().equals("")) {
-            startActivity(IntroActivity.class, context);
-
-            return false;
-        }
-
-        return true;
-    }
-
-    private static void startActivity(Class activityClass, Context context) {
-        Intent intent = new Intent(context, activityClass);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-    }
-
-    // region SQLite overrides
-
-    public static AppComponent getComponent() {
-        return component;
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();
         setupDagger();
         setupLeakCanary();
         setupFlowManager();
-        setupFacebookSdk();
         setupCrashlytics();
-        createBillingAndCheckout();
         registerActivityLifecycleCallbacks();
-
-
         Fresco.initialize(this);
         checkIfNewVersion();
     }
@@ -178,21 +138,6 @@ public abstract class HabiticaBaseApplication extends Application {
         FlowManager.init(this);
     }
 
-    private void setupFacebookSdk() {
-        String fbApiKey = null;
-        try {
-            ApplicationInfo ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
-            Bundle bundle = ai.metaData;
-            // fbApiKey = bundle.getString(FacebookSdk.APPLICATION_ID_PROPERTY);
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e("FB Error", "Failed to load meta-data, NameNotFound: " + e.getMessage());
-        } catch (NullPointerException e) {
-            Log.e("FB Error", "Failed to load meta-data, NullPointer: " + e.getMessage());
-        }
-        if (fbApiKey != null) {
-            //FacebookSdk.sdkInitialize(getApplicationContext());
-        }
-    }
 
     private void setupCrashlytics() {
      /*   Crashlytics crashlytics = new Crashlytics.Builder()
@@ -289,7 +234,8 @@ public abstract class HabiticaBaseApplication extends Application {
 
         try {
             Field field = FlowManager.class.getDeclaredField("mDatabaseHolder");
-            setFinalStatic(field, null);
+            field.setAccessible(true);
+            field.set(null, null);
         } catch (NoSuchFieldException noSuchField) {
             Log.e("nosuchfield", "No such field exists in FlowManager", noSuchField);
         } catch (IllegalAccessException illegalAccess) {
@@ -312,34 +258,7 @@ public abstract class HabiticaBaseApplication extends Application {
         return dbFile;
     }
 
-    private void createBillingAndCheckout() {
-        billing = new Billing(this, new Billing.DefaultConfiguration() {
-            @NonNull
-            @Override
-            public String getPublicKey() {
-                return "DONT-NEED-IT";
-            }
-
-            @Nullable
-            @Override
-            public Cache getCache() {
-                return Billing.newCache();
-            }
-
-            @Override
-            public PurchaseVerifier getPurchaseVerifier() {
-                return new HabiticaPurchaseVerifier(HabiticaBaseApplication.this, lazyApiHelper.get());
-            }
-        });
-
-
-        checkout = Checkout.forApplication(billing, Products.create().add(ProductTypes.IN_APP, PurchaseTypes.allTypes));
-    }
 
     // endregion
 
-    @NonNull
-    public Checkout getCheckout() {
-        return checkout;
-    }
 }

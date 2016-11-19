@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.PushDevice;
 
@@ -38,7 +38,7 @@ public class PushNotificationManager {
     private HabitRPGUser user;
 
     protected PushNotificationManager(Context context) {
-        HabiticaApplication.getInstance(context).getComponent().inject(this);
+        HabiticaBaseApplication.getComponent().inject(this);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 

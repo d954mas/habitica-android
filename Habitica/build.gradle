@@ -140,7 +140,6 @@ dependencies {
     compile "com.raizlabs.android:DBFlow-Core:2.2.1"
     compile "com.raizlabs.android:DBFlow:2.2.1"
     compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'org.solovyev.android:checkout:0.7.5@aar'
     compile 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
     compile('com.facebook.fresco:fresco:0.14.0') {
         exclude module: 'bolts-android'
