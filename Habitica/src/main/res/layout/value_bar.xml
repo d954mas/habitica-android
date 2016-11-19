@@ -37,18 +37,19 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/bar_padding"
         android:orientation="horizontal">
+
         <ImageView
             android:id="@+id/ic_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/bar_full"
+            android:layout_alignBottom="@+id/bar_full"
             android:layout_alignTop="@+id/bar_full"
             android:layout_marginEnd="@dimen/bar_icon_padding"
             android:layout_marginRight="@dimen/bar_icon_padding"
             android:contentDescription="Bar Icon"
             android:scaleType="center"/>
         <LinearLayout
-            android:id="@id/bar_full"
+            android:id="@+id/bar_full"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/bar_size"
             android:layout_toEndOf="@id/ic_header"
@@ -56,6 +57,7 @@
             android:background="@{partyMembers ? @drawable/layout_rounded_bg_light_gray : @drawable/layout_rounded_bg_brand}"
             android:orientation="horizontal"
             android:weightSum="1">
+
 
             <View
                 android:id="@+id/bar"

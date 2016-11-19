@@ -39,8 +39,6 @@
                     android:id="@+id/ic_hp_header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/hp_bar"
-                    android:layout_alignTop="@+id/hp_bar"
                     android:layout_marginEnd="@dimen/bar_icon_padding"
                     android:layout_marginRight="@dimen/bar_icon_padding"
                     android:contentDescription="@string/HP_default"
