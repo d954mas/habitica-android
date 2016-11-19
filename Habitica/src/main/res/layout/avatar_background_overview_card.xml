@@ -16,7 +16,7 @@
         android:padding="5dp"
         android:paddingBottom="8dp"
         android:paddingTop="8dp">
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:layout_width="@dimen/avatar_width"
             android:layout_height="@dimen/avatar_height"
             android:alpha="@{imageNamed == null ? 0.4f : 1.0f}"

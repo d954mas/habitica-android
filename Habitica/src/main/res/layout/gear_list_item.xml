@@ -6,9 +6,9 @@
               android:layout_height="wrap_content"
               android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/gear_image"
-        android:layout_width="@dimen/gear_image_size"
+    <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/gear_image"
+            android:layout_width="@dimen/gear_image_size"
         android:layout_height="@dimen/gear_image_size"
         android:layout_marginRight="@dimen/row_padding" />
 
