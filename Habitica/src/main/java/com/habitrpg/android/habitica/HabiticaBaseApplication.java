@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.database.DatabaseErrorHandler;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -179,18 +177,6 @@ public abstract class HabiticaBaseApplication extends Application {
         });
     }
 
-    @Override
-    public SQLiteDatabase openOrCreateDatabase(String name,
-                                               int mode, SQLiteDatabase.CursorFactory factory) {
-        return super.openOrCreateDatabase(getDatabasePath(name).getAbsolutePath(), mode, factory);
-    }
-
-    @Override
-    public SQLiteDatabase openOrCreateDatabase(String name,
-                                               int mode, SQLiteDatabase.CursorFactory factory, DatabaseErrorHandler errorHandler) {
-        return super.openOrCreateDatabase(getDatabasePath(name).getAbsolutePath(), mode, factory, errorHandler);
-    }
-
     // endregion
 
     // region IAP - Specific
@@ -246,7 +232,7 @@ public abstract class HabiticaBaseApplication extends Application {
 
     @Override
     public File getDatabasePath(String name) {
-        File dbFile = new File(getExternalFilesDir(null), "HabiticaDatabase/" + name);
+        File dbFile = new File(getCacheDir(), "HabiticaDatabase/" + name);
         //Crashlytics.setString("Database File", dbFile.getAbsolutePath());
         return dbFile;
     }

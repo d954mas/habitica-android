@@ -1,11 +1,15 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
 
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.widget.LinearLayout;
+
 import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,16 +18,6 @@ import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.util.ActivityController;
-
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.widget.LinearLayout;
-
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP)
@@ -70,7 +64,7 @@ abstract public class BaseFragmentTests<F extends Fragment> {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             LinearLayout view = new LinearLayout(this);
-            view.setId(R.id.frame_container);
+            // view.setId(R.id.frame_container);
 
             setContentView(view);
         }

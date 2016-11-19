@@ -5,6 +5,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.dagger.singleton.modules.ApiModule;
 import com.habitrpg.android.habitica.dagger.singleton.modules.AppModule;
 import com.habitrpg.android.habitica.dagger.singleton.modules.DeveloperModule;
+import com.habitrpg.android.habitica.dagger.singleton.modules.NetModule;
 import com.habitrpg.android.habitica.debug.iface.BlockCanaryProxy;
 import com.habitrpg.android.habitica.debug.iface.CrashlyticsProxy;
 import com.habitrpg.android.habitica.debug.iface.DevMetricsProxy;
@@ -81,7 +82,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {AppModule.class, ApiModule.class, DeveloperModule.class})
+@Component(modules = {AppModule.class, ApiModule.class, DeveloperModule.class, NetModule.class})
 public interface AppComponent {
 
     void inject(ClassSelectionActivity classSelectionActivity);

@@ -38,7 +38,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import rx.functions.Action1;
 
 /**
@@ -343,7 +342,4 @@ public class LoginActivity extends BaseActivityOld
         }
     }
 
-    @OnClick(R.id.google_login_button)
-    public void handleGoogleLogin() {
-    }
 }
