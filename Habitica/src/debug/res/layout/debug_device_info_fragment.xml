@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <include layout="@layout/debug_title_layout"/>
+
+    <LinearLayout style="@style/DebugItemContainer">
+
+        <TextView
+            style="@style/DebugItemTitle"
+            android:text="Make"
+            tools:ignore="HardcodedText"/>
+
+        <TextView
+            android:id="@+id/make_text"
+            style="@style/DebugItemTitle"
+            tools:ignore="HardcodedText"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/DebugItemContainer">
+
+        <TextView
+            style="@style/DebugItemTitle"
+            android:text="Model"
+            tools:ignore="HardcodedText"/>
+
+        <TextView
+            android:id="@+id/model_text"
+            style="@style/DebugItemTitle"
+            tools:ignore="HardcodedText"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/DebugItemContainer">
+
+        <TextView
+            style="@style/DebugItemTitle"
+            android:text="Resolution"
+            tools:ignore="HardcodedText"/>
+
+        <TextView
+            android:id="@+id/resolution_text"
+            style="@style/DebugItemTitle"
+            tools:ignore="HardcodedText"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/DebugItemContainer">
+
+        <TextView
+            style="@style/DebugItemTitle"
+            android:text="Density"
+            tools:ignore="HardcodedText"/>
+
+        <TextView
+            android:id="@+id/density_text"
+            style="@style/DebugItemTitle"
+            tools:ignore="HardcodedText"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/DebugItemContainer">
+
+        <TextView
+            style="@style/DebugItemTitle"
+            android:text="Release"
+            tools:ignore="HardcodedText"/>
+
+        <TextView
+            android:id="@+id/release_text"
+            style="@style/DebugItemTitle"
+            tools:ignore="HardcodedText"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/DebugItemContainer">
+
+        <TextView
+            style="@style/DebugItemTitle"
+            android:text="Api"
+            tools:ignore="HardcodedText"/>
+
+        <TextView
+            android:id="@+id/api_text"
+            style="@style/DebugItemTitle"
+            tools:ignore="HardcodedText"/>
+    </LinearLayout>
+
+
+</LinearLayout>

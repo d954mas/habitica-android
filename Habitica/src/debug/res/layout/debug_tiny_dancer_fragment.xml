@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <include layout="@layout/debug_title_layout"/>
+
+    <LinearLayout style="@style/DebugItemContainer">
+
+        <TextView
+            style="@style/DebugItemTitle"
+            android:text="TinyDancer"
+            tools:ignore="HardcodedText"/>
+
+        <Switch
+            android:id="@+id/toggle_tiny_dancer"
+            style="@style/DebugItemControl"/>
+    </LinearLayout>
+
+
+</LinearLayout>

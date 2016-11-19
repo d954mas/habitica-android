@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <include layout="@layout/debug_title_layout"/>
+
+    <LinearLayout style="@style/DebugItemContainer">
+
+        <TextView
+            style="@style/DebugItemTitle"
+            android:text="Enable Scalpel"
+            tools:ignore="HardcodedText"/>
+
+        <Switch
+            android:id="@+id/toggle_enable_scalpel"
+            style="@style/DebugItemControl"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/DebugItemContainer">
+
+        <TextView
+            style="@style/DebugItemTitle"
+            android:text="Disable Graphics"
+            tools:ignore="HardcodedText"/>
+
+        <Switch
+            android:id="@+id/toggle_disable_graphics"
+            style="@style/DebugItemControl"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/DebugItemContainer">
+
+        <TextView
+            style="@style/DebugItemTitle"
+            android:text="Show Ids"
+            tools:ignore="HardcodedText"/>
+
+        <Switch
+            android:id="@+id/toggle_show_id"
+            style="@style/DebugItemControl"/>
+    </LinearLayout>
+
+
+</LinearLayout>
