@@ -1,9 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.setup;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,10 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragmentOld;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class IntroFragment extends BaseFragment {
+public class IntroFragment extends BaseFragmentOld {
 
     @BindView(R.id.titleTextView)
     TextView titleTextView;

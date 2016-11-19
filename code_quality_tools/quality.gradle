@@ -1,5 +1,4 @@
 plugins.apply('pmd')
-plugins.apply('net.ltgt.errorprone')
 
 pmd {
     toolVersion = '5.4.1'

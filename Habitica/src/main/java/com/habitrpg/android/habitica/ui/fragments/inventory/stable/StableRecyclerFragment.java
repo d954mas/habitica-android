@@ -1,12 +1,20 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.stable;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
 import com.habitrpg.android.habitica.events.ContentReloadedEvent;
 import com.habitrpg.android.habitica.events.ReloadContentEvent;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragmentOld;
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -19,14 +27,6 @@ import com.raizlabs.android.dbflow.sql.language.Where;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +36,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class StableRecyclerFragment extends BaseFragment {
+public class StableRecyclerFragment extends BaseFragmentOld {
     private static final String ITEM_TYPE_KEY = "CLASS_TYPE_KEY";
     @BindView(R.id.recyclerView)
     public RecyclerViewEmptySupport recyclerView;

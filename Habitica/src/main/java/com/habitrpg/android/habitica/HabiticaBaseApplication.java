@@ -9,19 +9,18 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.arellomobile.mvp.MvpFacade;
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
 import com.habitrpg.android.habitica.ui.activities.LoginActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.config.FlowManager;
-import com.squareup.leakcanary.LeakCanary;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -85,13 +84,22 @@ public abstract class HabiticaBaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        MvpFacade.init();
         setupDagger();
-        setupLeakCanary();
+        setupProxy();
         setupFlowManager();
-        setupCrashlytics();
         registerActivityLifecycleCallbacks();
         Fresco.initialize(this);
         checkIfNewVersion();
+    }
+
+    private void setupProxy() {
+        component.getBlockCanaryProxy().init();
+        component.getCrashlyticsProxy().init();
+        component.getDevMetricsProxy().init();
+        component.getLeakCanaryProxy().init();
+        component.getLynxProxy().init();
+        component.getStethoProxy().init();
     }
 
     private void checkIfNewVersion() {
@@ -127,23 +135,8 @@ public abstract class HabiticaBaseApplication extends Application {
 
     protected abstract AppComponent initDagger();
 
-    private void setupLeakCanary() {
-        // LeakCanary 1.3.1 has problems on Marshmallow; can remove check once updated with fixes
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            LeakCanary.install(this);
-        }
-    }
-
     private void setupFlowManager() {
         FlowManager.init(this);
-    }
-
-
-    private void setupCrashlytics() {
-     /*   Crashlytics crashlytics = new Crashlytics.Builder()
-                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-                .build();
-        Fabric.with(this, crashlytics);*/
     }
 
     private void registerActivityLifecycleCallbacks() {

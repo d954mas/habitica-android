@@ -1,10 +1,8 @@
-package com.habitrpg.android.habitica.proxy.ifce;
+package com.habitrpg.android.habitica.debug.iface;
 
-
-import android.content.Context;
 
 public interface CrashlyticsProxy {
-    void init(Context context);
+    void init();
 
     void logException(Throwable t);
 

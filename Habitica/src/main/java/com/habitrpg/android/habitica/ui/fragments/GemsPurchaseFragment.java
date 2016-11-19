@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
+import com.habitrpg.android.habitica.debug.iface.CrashlyticsProxy;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView;
 
 import java.util.HashMap;
@@ -18,7 +18,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class GemsPurchaseFragment extends BaseFragment {
+public class GemsPurchaseFragment extends BaseFragmentOld {
 
     @BindView(R.id.gems_4_view)
     GemPurchaseOptionsView gems4View;

@@ -1,13 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
-
-import net.pherth.android.emoji_library.EmojiTextView;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
+import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
+
+import net.pherth.android.emoji_library.EmojiTextView;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -23,7 +23,7 @@ import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class MaintenanceActivity extends BaseActivity {
+public class MaintenanceActivity extends BaseActivityOld {
 
     @Inject
     public MaintenanceApiService maintenanceService;

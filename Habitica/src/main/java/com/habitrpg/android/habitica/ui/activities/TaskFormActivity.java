@@ -36,7 +36,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.helpers.FirstDayOfTheWeekHelper;
@@ -83,7 +83,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class TaskFormActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
+public class TaskFormActivity extends BaseActivityOld implements AdapterView.OnItemSelectedListener {
     public static final String TASK_ID_KEY = "taskId";
     public static final String USER_ID_KEY = "userId";
     public static final String TASK_TYPE_KEY = "type";

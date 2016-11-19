@@ -1,12 +1,12 @@
-package com.habitrpg.android.habitica.modules;
+package com.habitrpg.android.habitica.dagger.singleton.modules;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.HostConfig;
 import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
-
-import android.content.Context;
-import android.content.SharedPreferences;
 
 import javax.inject.Singleton;
 

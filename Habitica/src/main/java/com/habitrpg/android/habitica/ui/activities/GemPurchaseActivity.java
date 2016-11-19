@@ -7,10 +7,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 
-public class GemPurchaseActivity extends BaseActivity {
+public class GemPurchaseActivity extends BaseActivityOld {
 
     @Override
     protected int getLayoutResId() {

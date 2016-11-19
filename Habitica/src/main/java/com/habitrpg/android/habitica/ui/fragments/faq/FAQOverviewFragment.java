@@ -1,19 +1,19 @@
 package com.habitrpg.android.habitica.ui.fragments.faq;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.adapter.FAQOverviewRecyclerAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
-import com.magicmicky.habitrpgwrapper.lib.models.FAQArticle;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
+import com.habitrpg.android.habitica.ui.adapter.FAQOverviewRecyclerAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
+import com.magicmicky.habitrpgwrapper.lib.models.FAQArticle;
+import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.List;
 

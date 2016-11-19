@@ -1,19 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.setup;
 
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.AvatarView;
-import com.habitrpg.android.habitica.ui.activities.SetupActivity;
-import com.habitrpg.android.habitica.ui.adapter.setup.CustomizationSetupAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
-import com.magicmicky.habitrpgwrapper.lib.models.Customization;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.sql.language.Where;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -22,6 +8,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
+import com.habitrpg.android.habitica.ui.AvatarView;
+import com.habitrpg.android.habitica.ui.activities.SetupActivity;
+import com.habitrpg.android.habitica.ui.adapter.setup.CustomizationSetupAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragmentOld;
+import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
+import com.magicmicky.habitrpgwrapper.lib.models.Customization;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
+import com.raizlabs.android.dbflow.sql.language.Where;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -29,7 +29,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AvatarSetupFragment extends BaseFragment {
+public class AvatarSetupFragment extends BaseFragmentOld {
 
     public SetupActivity activity;
     public int width;

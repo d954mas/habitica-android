@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
 import com.habitrpg.android.habitica.events.commands.SelectMemberCommand;
 import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter;
 
@@ -19,7 +19,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class SkillMemberActivity extends BaseActivity {
+public class SkillMemberActivity extends BaseActivityOld {
 
     private PartyMemberRecyclerViewAdapter viewAdapter;
 

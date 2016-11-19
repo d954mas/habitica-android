@@ -1,17 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.databinding.FragmentGroupInfoBinding;
-import com.habitrpg.android.habitica.databinding.ValueBarBinding;
-import com.habitrpg.android.habitica.helpers.QrCodeManager;
-import com.habitrpg.android.habitica.ui.adapter.social.QuestCollectRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.Group;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -27,13 +15,25 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
+import com.habitrpg.android.habitica.databinding.FragmentGroupInfoBinding;
+import com.habitrpg.android.habitica.databinding.ValueBarBinding;
+import com.habitrpg.android.habitica.helpers.QrCodeManager;
+import com.habitrpg.android.habitica.ui.adapter.social.QuestCollectRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragmentOld;
+import com.magicmicky.habitrpgwrapper.lib.models.Group;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class GroupInformationFragment extends BaseFragment {
+public class GroupInformationFragment extends BaseFragmentOld {
 
 
     FragmentGroupInfoBinding viewBinding;
@@ -63,7 +63,6 @@ public class GroupInformationFragment extends BaseFragment {
     private ValueBarBinding bossRageBar;
 
     private QuestCollectRecyclerViewAdapter questCollectViewAdapter;
-
     public GroupInformationFragment() {
 
     }

@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
@@ -21,7 +21,7 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.HabitsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragmentOld;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperDropCallback;
 import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
@@ -39,7 +39,7 @@ import javax.inject.Named;
  * - Adds FAB Icon
  * - Handles the ScrollPosition - if anyone has a better solution please share it
  */
-public class TaskRecyclerViewFragment extends BaseFragment implements View.OnClickListener {
+public class TaskRecyclerViewFragment extends BaseFragmentOld implements View.OnClickListener {
     private static final String CLASS_TYPE_KEY = "CLASS_TYPE_KEY";
     public RecyclerView recyclerView;
     public BaseTasksRecyclerViewAdapter recyclerAdapter;

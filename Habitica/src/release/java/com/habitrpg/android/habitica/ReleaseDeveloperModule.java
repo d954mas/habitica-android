@@ -1,9 +1,14 @@
 package com.habitrpg.android.habitica;
 
 
-import com.habitrpg.android.habitica.modules.DeveloperModule;
+import android.content.Context;
 
-//change debug proxy here by override methods
+import com.habitrpg.android.habitica.dagger.singleton.modules.DeveloperModule;
+import com.habitrpg.android.habitica.debug.iface.CrashlyticsProxy;
+import com.habitrpg.android.habitica.proxy.CrashlyticsProxyImpl;
+
 public class ReleaseDeveloperModule extends DeveloperModule {
-
+    @Override protected CrashlyticsProxy provideCrashlyticsProxy(Context context) {
+        return new CrashlyticsProxyImpl(context);
+    }
 }

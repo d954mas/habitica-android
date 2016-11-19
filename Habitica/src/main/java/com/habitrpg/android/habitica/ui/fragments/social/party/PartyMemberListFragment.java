@@ -1,11 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.social.party;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
+import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragmentOld;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -22,7 +22,7 @@ import butterknife.BindView;
 /**
  * Created by Negue on 15.09.2015.
  */
-public class PartyMemberListFragment extends BaseFragment {
+public class PartyMemberListFragment extends BaseFragmentOld {
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;

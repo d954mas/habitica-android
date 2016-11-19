@@ -25,7 +25,7 @@ import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
 import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -44,7 +44,7 @@ import rx.functions.Action1;
 /**
  * @author Mickael Goubin
  */
-public class LoginActivity extends BaseActivity
+public class LoginActivity extends BaseActivityOld
         implements Action1<UserAuthResponse>, HabitRPGUserCallback.OnUserReceived {
     static final int REQUEST_CODE_PICK_ACCOUNT = 1000;
     private final static String TAG_ADDRESS = "address";

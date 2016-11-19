@@ -1,15 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.shops;
 
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
-import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Shop;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,12 +8,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
+import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragmentOld;
+import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
+import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.Shop;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ShopFragment extends BaseFragment {
+public class ShopFragment extends BaseFragmentOld {
     private static final String SHOP_IDENTIFIER_KEY = "SHOP_IDENTIFIER_KEY";
 
     @BindView(R.id.recyclerView)

@@ -1,16 +1,23 @@
-package com.habitrpg.android.habitica.components;
+package com.habitrpg.android.habitica.dagger.singleton.components;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
+import com.habitrpg.android.habitica.dagger.singleton.modules.ApiModule;
+import com.habitrpg.android.habitica.dagger.singleton.modules.AppModule;
+import com.habitrpg.android.habitica.dagger.singleton.modules.DeveloperModule;
+import com.habitrpg.android.habitica.debug.iface.BlockCanaryProxy;
+import com.habitrpg.android.habitica.debug.iface.CrashlyticsProxy;
+import com.habitrpg.android.habitica.debug.iface.DevMetricsProxy;
+import com.habitrpg.android.habitica.debug.iface.LeakCanaryProxy;
+import com.habitrpg.android.habitica.debug.iface.LynxProxy;
+import com.habitrpg.android.habitica.debug.iface.StethoProxy;
 import com.habitrpg.android.habitica.helpers.RemindersManager;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
-import com.habitrpg.android.habitica.modules.ApiModule;
-import com.habitrpg.android.habitica.modules.AppModule;
-import com.habitrpg.android.habitica.modules.DeveloperModule;
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver;
 import com.habitrpg.android.habitica.ui.activities.AboutActivity;
+import com.habitrpg.android.habitica.ui.activities.BaseActivity;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
@@ -28,6 +35,7 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
 import com.habitrpg.android.habitica.ui.adapter.tasks.HabitsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.NewsFragment;
 import com.habitrpg.android.habitica.ui.fragments.faq.FAQDetailFragment;
@@ -205,4 +213,20 @@ public interface AppComponent {
     void inject(RewardsRecyclerViewAdapter rewardsRecyclerViewAdapter);
 
     void inject(TodosRecyclerViewAdapter todosRecyclerViewAdapter);
+
+    void inject(BaseFragment baseFragmentNew);
+
+    void inject(BaseActivity baseActivity);
+
+    BlockCanaryProxy getBlockCanaryProxy();
+
+    DevMetricsProxy getDevMetricsProxy();
+
+    LeakCanaryProxy getLeakCanaryProxy();
+
+    LynxProxy getLynxProxy();
+
+    StethoProxy getStethoProxy();
+
+    CrashlyticsProxy getCrashlyticsProxy();
 }

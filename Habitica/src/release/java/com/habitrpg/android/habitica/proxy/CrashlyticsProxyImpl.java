@@ -4,15 +4,22 @@ package com.habitrpg.android.habitica.proxy;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
+import com.habitrpg.android.habitica.debug.iface.CrashlyticsProxy;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import io.fabric.sdk.android.Fabric;
 
 public class CrashlyticsProxyImpl implements CrashlyticsProxy {
+    private Context context;
+
+    public CrashlyticsProxyImpl(@NonNull Context context) {
+        this.context = context;
+    }
+
     @Override
-    public void init(Context context) {
+    public void init() {
         Crashlytics crashlytics = new Crashlytics.Builder()
                 .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
                 .build();

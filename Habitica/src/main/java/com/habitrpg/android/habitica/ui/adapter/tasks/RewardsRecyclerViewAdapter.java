@@ -1,10 +1,13 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks;
 
+import android.content.Context;
+import android.view.ViewGroup;
+
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -12,9 +15,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
-
-import android.content.Context;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
