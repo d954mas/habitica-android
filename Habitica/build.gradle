@@ -84,7 +84,6 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             resValue "string", "content_provider", "com.habitrpg.android.habitica.fileprovider"
-            resValue "string", "app_name", "Habitica"
         }
         debug {
             ext.enableCrashlytics = false
@@ -93,7 +92,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             applicationIdSuffix '.debug'
             resValue "string", "content_provider", "com.habitrpg.android.habitica.debug.fileprovider"
-            resValue "string", "app_name", "Habitica Debug"
         }
     }
     lintOptions {
@@ -133,6 +131,8 @@ dependencies {
     compile 'com.google.dagger:dagger:2.7'
     apt 'com.google.dagger:dagger-compiler:2.7'
     provided 'javax.annotation:jsr250-api:1.0'
+    compile 'com.hannesdorfmann.fragmentargs:annotation:3.0.2'
+    apt 'com.hannesdorfmann.fragmentargs:processor:3.0.2'
     compile 'com.arello-mobile:moxy:1.2.1'
     provided 'com.arello-mobile:moxy-compiler:1.2.1'
     compile 'com.arello-mobile:moxy-app-compat:1.2.1'

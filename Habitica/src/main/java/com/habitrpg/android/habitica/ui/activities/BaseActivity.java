@@ -12,6 +12,8 @@ import com.habitrpg.android.habitica.debug.iface.ViewContainer;
 
 import javax.inject.Inject;
 
+import butterknife.ButterKnife;
+
 @SuppressWarnings("PMD.AbstractClassWithoutAnyMethod")
 public abstract class BaseActivity extends MvpAppCompatActivity {
     @Inject ViewContainer viewContainer;
@@ -26,6 +28,7 @@ public abstract class BaseActivity extends MvpAppCompatActivity {
         ViewGroup container = viewContainer.forActivity(this);
         inflater.inflate(layout, container);
         viewContainer.initDebugView(this);
+        ButterKnife.bind(this);
     }
 }
 

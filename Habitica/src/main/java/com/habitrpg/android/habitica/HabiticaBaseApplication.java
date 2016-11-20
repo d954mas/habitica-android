@@ -26,6 +26,7 @@ import java.lang.reflect.Field;
 import javax.inject.Inject;
 
 import dagger.Lazy;
+import timber.log.Timber;
 
 //contains all HabiticaApplicationLogic except dagger componentInitialisation
 public abstract class HabiticaBaseApplication extends Application {
@@ -82,6 +83,7 @@ public abstract class HabiticaBaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (BuildConfig.DEBUG) Timber.plant(new Timber.DebugTree());
         MvpFacade.init();
         setupDagger();
         setupProxy();
