@@ -1,13 +1,11 @@
 package com.habitrpg.android.habitica;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -32,7 +30,6 @@ import timber.log.Timber;
 public abstract class HabiticaBaseApplication extends Application {
     //todo remove static
     public static HabitRPGUser User;
-    public static Activity currentActivity = null;
     private static AppComponent component;
     @Inject Lazy<APIHelper> lazyApiHelper;
     @Inject SharedPreferences sharedPrefs;
@@ -88,7 +85,6 @@ public abstract class HabiticaBaseApplication extends Application {
         setupDagger();
         setupProxy();
         setupFlowManager();
-        registerActivityLifecycleCallbacks();
         Fresco.initialize(this);
         checkIfNewVersion();
     }
@@ -139,45 +135,6 @@ public abstract class HabiticaBaseApplication extends Application {
         FlowManager.init(this);
     }
 
-    private void registerActivityLifecycleCallbacks() {
-        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
-            @Override
-            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-                HabiticaBaseApplication.currentActivity = activity;
-            }
-
-            @Override
-            public void onActivityStarted(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityResumed(Activity activity) {
-                HabiticaBaseApplication.currentActivity = activity;
-            }
-
-            @Override
-            public void onActivityPaused(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityStopped(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-
-            }
-
-            @Override
-            public void onActivityDestroyed(Activity activity) {
-                if (currentActivity == activity)
-                    currentActivity = null;
-            }
-        });
-    }
 
     // endregion
 

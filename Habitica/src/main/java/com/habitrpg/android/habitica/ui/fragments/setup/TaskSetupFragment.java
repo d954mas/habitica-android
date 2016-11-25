@@ -110,7 +110,7 @@ public class TaskSetupFragment extends BaseFragmentOld {
         }
         List<Task> tasks = new ArrayList<>();
         for (Object[] task : this.tasks) {
-            if (groups.contains((String) task[0])) {
+            if (groups.contains(task[0])) {
                 Task taskObject;
                 if (task.length == 5) {
                     taskObject = this.makeTaskObject((String) task[1], (String) task[2], (Boolean) task[3], (Boolean) task[4]);

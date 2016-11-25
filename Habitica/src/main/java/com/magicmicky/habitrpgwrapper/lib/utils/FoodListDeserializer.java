@@ -5,7 +5,6 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Food;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
@@ -60,7 +59,7 @@ public class FoodListDeserializer implements JsonDeserializer<List<Food>> {
             }
         } else {
             for (JsonElement item : json.getAsJsonArray()) {
-                vals.add((Food) context.deserialize(item.getAsJsonObject(), Food.class));
+                vals.add(context.deserialize(item.getAsJsonObject(), Food.class));
             }
         }
 

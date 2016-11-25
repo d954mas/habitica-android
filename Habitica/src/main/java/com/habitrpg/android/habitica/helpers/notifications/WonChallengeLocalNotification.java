@@ -4,14 +4,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
 
-import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
-
-import java.util.Map;
 
 /**
  * Created by keithholliday on 7/2/16.
@@ -21,7 +15,7 @@ public class WonChallengeLocalNotification extends HabiticaLocalNotification {
     public void notifyLocally(Context context, String title, String message) {
         super.notifyLocally(context, title, message);
         this.setNotificationActions();
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(10, notificationBuilder.build());
     }
 

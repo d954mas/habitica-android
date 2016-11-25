@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
@@ -228,7 +227,7 @@ public class ChatListFragment extends BaseFragmentOld implements SwipeRefreshLay
                 }, throwable -> {
                 });
 
-        UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
+        // UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
     }
 
     // If the ChatList is Tavern, we're able to toggle the sleep-mode

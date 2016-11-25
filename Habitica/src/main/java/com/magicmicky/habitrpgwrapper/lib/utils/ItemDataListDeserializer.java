@@ -5,7 +5,6 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
@@ -57,7 +56,7 @@ public class ItemDataListDeserializer implements JsonDeserializer<List<ItemData>
             }
         } else {
             for (JsonElement item : json.getAsJsonArray()) {
-                vals.add((ItemData) context.deserialize(item.getAsJsonObject(), ItemData.class));
+                vals.add(context.deserialize(item.getAsJsonObject(), ItemData.class));
             }
         }
 

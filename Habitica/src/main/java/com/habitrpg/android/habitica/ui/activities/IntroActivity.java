@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.ui.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -21,10 +20,10 @@ import butterknife.BindView;
 
 public class IntroActivity extends BaseActivity {
     @Inject public APIHelper apiHelper;
-    @BindView(R.id.view_pager) ViewPager pager;
-    @BindView(R.id.view_pager_indicator) CirclePageIndicator indicator;
-    @BindView(R.id.skipButton) Button skipButton;
-    @BindView(R.id.finishButton) Button finishButton;
+    @BindView(R.id.vp) ViewPager pager;
+    @BindView(R.id.vpIndicator) CirclePageIndicator indicator;
+    @BindView(R.id.btnSkip) Button skipButton;
+    @BindView(R.id.btnFinish) Button finishButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,8 +37,7 @@ public class IntroActivity extends BaseActivity {
     }
 
     private void setupIntro() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        pager.setAdapter(new FragmentPagerAdapter(fragmentManager) {
+        pager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
                 switch (position) {

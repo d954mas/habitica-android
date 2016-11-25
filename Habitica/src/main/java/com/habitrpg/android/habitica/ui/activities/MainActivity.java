@@ -1,10 +1,7 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
@@ -38,6 +35,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
@@ -47,7 +45,6 @@ import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
 import com.habitrpg.android.habitica.callbacks.UnlockCallback;
-import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.debug.iface.CrashlyticsProxy;
 import com.habitrpg.android.habitica.events.ContentReloadedEvent;
@@ -87,10 +84,6 @@ import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 import com.habitrpg.android.habitica.userpicture.BitmapUtils;
-import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider;
-import com.habitrpg.android.habitica.widget.DailiesWidgetProvider;
-import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
-import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
 import com.magicmicky.habitrpgwrapper.lib.models.Shop;
@@ -107,7 +100,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.inventory.HatchingPotion;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Item;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
-import com.magicmicky.habitrpgwrapper.lib.models.responses.MaintenanceResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
@@ -158,37 +150,25 @@ import rx.functions.Action1;
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.SnackbarDisplayType;
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
 
-public class MainActivity extends BaseActivityOld implements Action1<Throwable>, HabitRPGUserCallback.OnUserReceived,
+public class MainActivity extends BaseActivity implements Action1<Throwable>, HabitRPGUserCallback.OnUserReceived,
         TaskScoringCallback.OnTaskScored, TutorialView.OnTutorialReaction {
-
     public static final int SELECT_CLASS_RESULT = 11;
     public static final int GEM_PURCHASE_REQUEST = 111;
     public static final int MIN_LEVEL_FOR_SKILLS = 11;
-    @Inject
-    public APIHelper apiHelper;
 
-    @Inject
-    public SoundManager soundManager;
-    @Inject
-    public MaintenanceApiService maintenanceService;
+    @Inject public APIHelper apiHelper;
+    @Inject public SoundManager soundManager;
+    @Inject protected HostConfig hostConfig;
+    @Inject protected SharedPreferences sharedPreferences;
+    @Inject CrashlyticsProxy crashlyticsProxy;
     public HabitRPGUser user;
-    @Inject
-    protected HostConfig hostConfig;
-    @Inject
-    protected SharedPreferences sharedPreferences;
-    @Inject
-    CrashlyticsProxy crashlyticsProxy;
 
-    @BindView(R.id.floating_menu_wrapper)
-    FrameLayout floatingMenuWrapper;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.detail_tabs)
-    TabLayout detail_tabs;
-    @BindView(R.id.avatar_with_bars)
-    View avatar_with_bars;
-    @BindView(R.id.overlayFrameLayout)
-    FrameLayout overlayFrameLayout;
+
+    @BindView(R.id.floating_menu_wrapper) FrameLayout floatingMenuWrapper;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.detail_tabs) TabLayout detail_tabs;
+    @BindView(R.id.avatar_with_bars) View avatar_with_bars;
+    @BindView(R.id.overlayFrameLayout) FrameLayout overlayFrameLayout;
     PushNotificationManager pushNotificationManager;
     private Drawer drawer;
     private Drawer filterDrawer;
@@ -224,26 +204,22 @@ public class MainActivity extends BaseActivityOld implements Action1<Throwable>,
     }
 
     @Override
-    protected int getLayoutResId() {
-        return R.layout.activity_main;
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentViewInContainer(R.layout.activity_main);
+        HabiticaBaseApplication.getComponent().inject(this);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        LanguageHelper languageHelper = new LanguageHelper(sharedPreferences.getString("language","en"));
+        LanguageHelper languageHelper = new LanguageHelper(sharedPreferences.getString("language", "en"));
         Locale.setDefault(languageHelper.getLocale());
         Configuration configuration = new Configuration();
-        if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN){
+        if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
             configuration.locale = languageHelper.getLocale();
         } else {
             configuration.setLocale(languageHelper.getLocale());
         }
         getResources().updateConfiguration(configuration,
                 getResources().getDisplayMetrics());
-
 
 
         if (!HabiticaApplication.checkUserAuthentication(this, hostConfig)) {
@@ -275,11 +251,6 @@ public class MainActivity extends BaseActivityOld implements Action1<Throwable>,
     }
 
     @Override
-    protected void injectActivity(AppComponent component) {
-        component.inject(this);
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
 
@@ -290,7 +261,6 @@ public class MainActivity extends BaseActivityOld implements Action1<Throwable>,
                         .compose(apiHelper.configureApiCallObserver())
                         .subscribe(new HabitRPGUserCallback(this), throwable -> {
                         });
-                this.checkMaintenance();
             }
         }
 
@@ -313,26 +283,8 @@ public class MainActivity extends BaseActivityOld implements Action1<Throwable>,
         }
     }
 
-    @Override
-    protected void onPause() {
-        updateWidget(AvatarStatsWidgetProvider.class);
-        updateWidget(DailiesWidgetProvider.class);
-        updateWidget(HabitButtonWidgetProvider.class);
-        super.onPause();
-    }
-
-    private void updateWidget(Class widgetClass) {
-        Intent intent = new Intent(this,widgetClass);
-        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        int ids[] = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), widgetClass));
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
-        sendBroadcast(intent);
-    }
-
-
     private void saveLoginInformation() {
         HabiticaApplication.User = user;
-
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = prefs.edit();
         boolean ans = editor.putString(getString(R.string.SP_username), user.getAuthentication().getLocalAuthentication().getUsername())
@@ -345,12 +297,12 @@ public class MainActivity extends BaseActivityOld implements Action1<Throwable>,
     }
 
     public void displayFragment(BaseMainFragment fragment) {
-        if (this.activeFragment != null && fragment.getClass() == this.activeFragment.getClass()) {
+        if (activeFragment != null && fragment.getClass() == activeFragment.getClass()) {
             return;
         }
-        if (this.isDestroyed()) {
+      /*  if (isDestroyed()) {
             return;
-        }
+        }*/
         this.activeFragment = fragment;
         fragment.setArguments(getIntent().getExtras());
         fragment.setUser(user);
@@ -373,7 +325,7 @@ public class MainActivity extends BaseActivityOld implements Action1<Throwable>,
 
             Preferences preferences = user.getPreferences();
 
-            if(preferences!= null) {
+            if (preferences != null) {
                 apiHelper.languageCode = preferences.getLanguage();
             }
 
@@ -1311,7 +1263,7 @@ public class MainActivity extends BaseActivityOld implements Action1<Throwable>,
         }
 
         final ShareEvent event = new ShareEvent();
-        event.sharedMessage = getString(R.string.share_levelup, level) + " https://habitica.com/social/level-up";
+        event.sharedMessage = getString(R.string.share_levelup, String.valueOf(level)) + " https://habitica.com/social/level-up";
         AvatarView avatarView = new AvatarView(this, true, true, true);
         avatarView.setUser(user);
         avatarView.onAvatarImageReady(avatarImage -> event.shareImage = avatarImage);
@@ -1450,13 +1402,15 @@ public class MainActivity extends BaseActivityOld implements Action1<Throwable>,
                 .subscribe(new TaskScoringCallback(this, event.Task.getId()), throwable -> {
                 });
 
-        switch(event.Task.type){
+        switch (event.Task.type) {
             case Task.TYPE_DAILY: {
                 soundManager.loadAndPlayAudio(SoundManager.SoundDaily);
-            } break;
+            }
+            break;
             case Task.TYPE_TODO: {
                 soundManager.loadAndPlayAudio(SoundManager.SoundTodo);
-            } break;
+            }
+            break;
         }
     }
 
@@ -1494,41 +1448,6 @@ public class MainActivity extends BaseActivityOld implements Action1<Throwable>,
         }
     }
 
-    private void checkMaintenance() {
-        this.maintenanceService.getMaintenanceStatus()
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(maintenanceResponse -> {
-                    if (maintenanceResponse.activeMaintenance) {
-                        Intent intent = createMaintenanceIntent(maintenanceResponse, false);
-                        startActivity(intent);
-                    } else {
-                        if (maintenanceResponse.minBuild != null) {
-                            PackageInfo packageInfo = null;
-                            try {
-                                packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-                                if (packageInfo.versionCode < maintenanceResponse.minBuild) {
-                                    Intent intent = createMaintenanceIntent(maintenanceResponse, true);
-                                    startActivity(intent);
-                                }
-                            } catch (PackageManager.NameNotFoundException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }, throwable -> {
-                });
-    }
-
-    private Intent createMaintenanceIntent(MaintenanceResponse maintenanceResponse, Boolean isDeprecationNotice) {
-        Intent intent = new Intent(this, MaintenanceActivity.class);
-        Bundle data = new Bundle();
-        data.putString("title", maintenanceResponse.title);
-        data.putString("imageUrl", maintenanceResponse.imageUrl);
-        data.putString("description", maintenanceResponse.description);
-        data.putBoolean("deprecationNotice", isDeprecationNotice);
-        intent.putExtras(data);
-        return intent;
-    }
 
     @Override
     public void call(Throwable throwable) {
@@ -1588,7 +1507,7 @@ public class MainActivity extends BaseActivityOld implements Action1<Throwable>,
 
     @Subscribe
     public void onEvent(OpenFullProfileCommand cmd) {
-        if(cmd.MemberId.equals("system"))
+        if (cmd.MemberId.equals("system"))
             return;
 
         Bundle bundle = new Bundle();
@@ -1604,8 +1523,8 @@ public class MainActivity extends BaseActivityOld implements Action1<Throwable>,
         this.filterDrawer.removeItemByPosition(position);
     }
 
-    public void updateFilterDrawerItem (IDrawerItem item, int position) {
+    public void updateFilterDrawerItem(IDrawerItem item, int position) {
         this.filterDrawer.removeItemByPosition(position);
-        this.filterDrawer.addItemAtPosition(item,position);
+        this.filterDrawer.addItemAtPosition(item, position);
     }
 }

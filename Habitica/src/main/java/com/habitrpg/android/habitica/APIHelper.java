@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica;
 
-import android.app.Activity;
 import android.support.v7.app.AlertDialog;
 
 import com.google.gson.ExclusionStrategy;
@@ -102,8 +101,8 @@ import rx.schedulers.Schedulers;
 public class APIHelper implements Action1<Throwable> {
     // I think we don't need the APIHelper anymore we could just use ApiService
     public final ApiService apiService;
-    final Observable.Transformer apiCallTransformer =
-            observable -> ((Observable) observable).subscribeOn(Schedulers.io())
+    final Observable.Transformer<Observable, Observable> apiCallTransformer =
+            observable -> observable.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnError(this);
     private final GsonConverterFactory gsonConverter;
@@ -301,9 +300,9 @@ public class APIHelper implements Action1<Throwable> {
 
             if (status >= 400 && status < 500) {
                 if (res != null && res.message != null && !res.message.isEmpty()) {
-                    showConnectionProblemDialog("", res.message);
+                    //  showConnectionProblemDialog("", res.message);
                 } else if (status == 401) {
-                    showConnectionProblemDialog(R.string.authentication_error_title, R.string.authentication_error_body);
+                    //  showConnectionProblemDialog(R.string.authentication_error_title, R.string.authentication_error_body);
                 }
 
             } else if (status >= 500 && status < 600) {
@@ -380,34 +379,9 @@ public class APIHelper implements Action1<Throwable> {
     }
 
     private void showConnectionProblemDialog(final int resourceMessageString) {
-        showConnectionProblemDialog(R.string.network_error_title, resourceMessageString);
+        // showConnectionProblemDialog(R.string.network_error_title, resourceMessageString);
     }
 
-    private void showConnectionProblemDialog(final int resourceTitleString, final int resourceMessageString) {
-        Activity currentActivity = HabiticaApplication.currentActivity;
-        if (currentActivity != null) {
-            showConnectionProblemDialog(currentActivity.getString(resourceTitleString), currentActivity.getString(resourceMessageString));
-        }
-    }
-
-    private void showConnectionProblemDialog(final String resourceTitleString, final String resourceMessageString) {
-        HabiticaApplication.currentActivity.runOnUiThread(() -> {
-            if (!(HabiticaApplication.currentActivity).isFinishing() && displayedAlert == null) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(HabiticaApplication.currentActivity)
-                        .setTitle(resourceTitleString)
-                        .setMessage(resourceMessageString)
-                        .setNeutralButton(android.R.string.ok, (dialog, which) -> {
-                            displayedAlert = null;
-                        });
-
-                if (!resourceTitleString.isEmpty()) {
-                    builder.setIcon(R.drawable.ic_warning_black);
-                }
-
-                displayedAlert = builder.show();
-            }
-        });
-    }
 
     @SuppressWarnings("unchecked")
     public <T> Observable.Transformer<T, T> configureApiCallObserver() {

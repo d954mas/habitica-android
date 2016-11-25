@@ -23,7 +23,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.image.ImageInfo;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.ContentCache;
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
 import com.habitrpg.android.habitica.ui.AvatarView;
@@ -181,11 +180,11 @@ public class FullProfileActivity extends BaseActivityOld {
                             }, throwable -> {
                             });
 
-                    UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
+                    //  UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
                 })
                 .setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> {
 
-                    UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
+                    //UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
                 })
 
                 .create();

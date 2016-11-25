@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import android.accounts.AccountManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -23,9 +22,9 @@ import android.widget.TextView;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.BuildConfig;
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
 import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -37,48 +36,31 @@ import org.json.JSONObject;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import rx.functions.Action1;
 
-/**
- * @author Mickael Goubin
- */
-public class LoginActivity extends BaseActivityOld
+public class LoginActivity extends BaseActivity
         implements Action1<UserAuthResponse>, HabitRPGUserCallback.OnUserReceived {
     static final int REQUEST_CODE_PICK_ACCOUNT = 1000;
     private final static String TAG_ADDRESS = "address";
     private final static String TAG_USERID = "user";
     private final static String TAG_APIKEY = "key";
-    private static final int REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR = 1001;
 
 
-    @Inject
-    public APIHelper apiHelper;
-    @Inject
-    public SharedPreferences sharedPrefs;
+    @Inject public APIHelper apiHelper;
+    @Inject public SharedPreferences sharedPrefs;
     public String mTmpUserToken;
     public String mTmpApiToken;
     public Boolean isRegistering;
-    @BindView(R.id.login_btn)
-    Button mLoginNormalBtn;
-    @BindView(R.id.PB_AsyncTask)
-    ProgressBar mProgressBar;
-    @BindView(R.id.username)
-    EditText mUsernameET;
-    @BindView(R.id.password)
-    EditText mPasswordET;
-    @BindView(R.id.email)
-    EditText mEmail;
-    @BindView(R.id.confirm_password)
-    EditText mConfirmPassword;
-    @BindView(R.id.email_row)
-    TableRow mEmailRow;
-    @BindView(R.id.confirm_password_row)
-    TableRow mConfirmPasswordRow;
-    @BindView(R.id.forgot_pw_tv)
-    TextView mForgotPWTV;
+    @BindView(R.id.login_btn) Button mLoginNormalBtn;
+    @BindView(R.id.PB_AsyncTask) ProgressBar mProgressBar;
+    @BindView(R.id.username) EditText mUsernameET;
+    @BindView(R.id.password) EditText mPasswordET;
+    @BindView(R.id.email) EditText mEmail;
+    @BindView(R.id.confirm_password) EditText mConfirmPassword;
+    @BindView(R.id.email_row) TableRow mEmailRow;
+    @BindView(R.id.confirm_password_row) TableRow mConfirmPasswordRow;
+    @BindView(R.id.forgot_pw_tv) TextView mForgotPWTV;
     private Menu menu;
-    private String googleEmail;
     private View.OnClickListener mLoginNormalClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -129,34 +111,18 @@ public class LoginActivity extends BaseActivityOld
         v.setVisibility(View.GONE);
     }
 
-    @Override
-    protected int getLayoutResId() {
-        return R.layout.activity_login;
-    }
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        HabiticaBaseApplication.getComponent().inject(this);
+        setContentViewInContainer(R.layout.activity_login);
         //Set default values to avoid null-responses when requesting unedited settings
         PreferenceManager.setDefaultValues(this, R.xml.preferences_fragment, false);
-
-        ButterKnife.bind(this);
-
         mLoginNormalBtn.setOnClickListener(mLoginNormalClick);
-
-
         mForgotPWTV.setOnClickListener(mForgotPWClick);
         SpannableString content = new SpannableString(mForgotPWTV.getText());
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         mForgotPWTV.setText(content);
-
-
         this.isRegistering = true;
-    }
-
-    @Override
-    protected void injectActivity(AppComponent component) {
-        component.inject(this);
     }
 
     private void resetLayout() {
@@ -223,23 +189,12 @@ public class LoginActivity extends BaseActivityOld
                 Log.e("scanresult", "Could not parse scanResult", e);
             }
         }
-
-        if (requestCode == REQUEST_CODE_PICK_ACCOUNT) {
-            if (resultCode == RESULT_OK) {
-                googleEmail = intent.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
-                //handleGoogleLoginResult();
-            }
-        }
-        if (requestCode == REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR) {
-            //handleGoogleLoginResult();
-        }
     }
 
     private void parse(String contents) {
         String adr, user, key;
         try {
             JSONObject obj;
-
             obj = new JSONObject(contents);
             adr = obj.getString(TAG_ADDRESS);
             user = obj.getString(TAG_USERID);
@@ -268,7 +223,6 @@ public class LoginActivity extends BaseActivityOld
     private void showSnackbar(String content) {
         Snackbar snackbar = Snackbar
                 .make(this.findViewById(R.id.login_linear_layout), content, Snackbar.LENGTH_LONG);
-
         View snackbarView = snackbar.getView();
         snackbarView.setBackgroundColor(Color.RED);//change Snackbar's background color;
         snackbar.show(); // Don’t forget to show!

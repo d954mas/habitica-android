@@ -5,7 +5,6 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.HatchingPotion;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
@@ -59,7 +58,7 @@ public class HatchingPotionListDeserializer implements JsonDeserializer<List<Hat
             }
         } else {
             for (JsonElement item : json.getAsJsonArray()) {
-                vals.add((HatchingPotion) context.deserialize(item.getAsJsonObject(), HatchingPotion.class));
+                vals.add(context.deserialize(item.getAsJsonObject(), HatchingPotion.class));
             }
         }
 

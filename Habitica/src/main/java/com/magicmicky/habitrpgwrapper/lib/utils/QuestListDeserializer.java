@@ -5,7 +5,6 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 import com.raizlabs.android.dbflow.runtime.TransactionManager;
 import com.raizlabs.android.dbflow.runtime.transaction.process.ProcessModelInfo;
@@ -67,7 +66,7 @@ public class QuestListDeserializer implements JsonDeserializer<List<QuestContent
             TransactionManager.getInstance().addTransaction(new SaveModelTransaction<>(ProcessModelInfo.withModels(vals)));
         } else {
             for (JsonElement item : json.getAsJsonArray()) {
-                vals.add((QuestContent) context.deserialize(item.getAsJsonObject(), QuestContent.class));
+                vals.add(context.deserialize(item.getAsJsonObject(), QuestContent.class));
             }
         }
 

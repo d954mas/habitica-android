@@ -22,11 +22,9 @@ import com.habitrpg.android.habitica.ui.activities.BaseActivity;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
-import com.habitrpg.android.habitica.ui.activities.HabitButtonWidgetActivity;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
 import com.habitrpg.android.habitica.ui.activities.LoginActivity;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.ui.activities.MaintenanceActivity;
 import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity;
 import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity;
@@ -72,10 +70,6 @@ import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragme
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyMemberListFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TaskRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment;
-import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider;
-import com.habitrpg.android.habitica.widget.DailiesWidgetProvider;
-import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
-import com.habitrpg.android.habitica.widget.HabitButtonWidgetService;
 
 import javax.inject.Singleton;
 
@@ -96,8 +90,6 @@ public interface AppComponent {
     void inject(LoginActivity loginActivity);
 
     void inject(MainActivity mainActivity);
-
-    void inject(MaintenanceActivity maintenanceActivity);
 
     void inject(PartyInviteActivity partyInviteActivity);
 
@@ -186,16 +178,6 @@ public interface AppComponent {
     void inject(LocalNotificationActionReceiver localNotificationActionReceiver);
 
     void inject(FullProfileActivity fullProfileActivity);
-
-    void inject(DailiesWidgetProvider dailiesWidgetProvider);
-
-    void inject(HabitButtonWidgetService habitButtonWidgetService);
-
-    void inject(HabitButtonWidgetActivity habitButtonWidgetActivity);
-
-    void inject(HabitButtonWidgetProvider habitButtonWidgetProvider);
-
-    void inject(AvatarStatsWidgetProvider avatarStatsWidgetProvider);
 
     void inject(SoundManager soundManager);
 

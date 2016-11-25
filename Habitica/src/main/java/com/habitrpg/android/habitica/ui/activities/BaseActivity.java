@@ -3,6 +3,8 @@ package com.habitrpg.android.habitica.ui.activities;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -29,6 +31,21 @@ public abstract class BaseActivity extends MvpAppCompatActivity {
         inflater.inflate(layout, container);
         viewContainer.initDebugView(this);
         ButterKnife.bind(this);
+    }
+
+    protected void setupToolbar(Toolbar toolbar) {
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setDisplayShowHomeEnabled(false);
+                actionBar.setDisplayShowTitleEnabled(true);
+                actionBar.setDisplayUseLogoEnabled(false);
+                actionBar.setHomeButtonEnabled(false);
+            }
+        }
     }
 }
 

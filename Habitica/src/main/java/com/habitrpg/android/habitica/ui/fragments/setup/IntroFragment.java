@@ -19,9 +19,9 @@ import butterknife.BindView;
 
 @FragmentWithArgs
 public class IntroFragment extends BaseFragment {
-    @BindView(R.id.titleTextView) TextView titleTextView;
-    @BindView(R.id.descriptionTextView) TextView descriptionTextView;
-    @BindView(R.id.imageView) ImageView imageView;
+    @BindView(R.id.tvTitle) TextView titleTextView;
+    @BindView(R.id.tvDescription) TextView descriptionTextView;
+    @BindView(R.id.iv) ImageView imageView;
     @Arg int imageId;
     @Arg String title;
     @Arg String description;
@@ -31,7 +31,8 @@ public class IntroFragment extends BaseFragment {
         return inflater.inflate(R.layout.fragment_intro, container, false);
     }
 
-    @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FragmentArgs.inject(this);
         imageView.setImageDrawable(ContextCompat.getDrawable(getContext(), imageId));

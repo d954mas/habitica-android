@@ -24,6 +24,6 @@ public class TaskDeletionCallback implements Action1<Void> {
 
 
     public interface OnTaskDeleted {
-        public void onTaskDeleted(Task deleted);
+        void onTaskDeleted(Task deleted);
     }
 }
