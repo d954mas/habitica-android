@@ -1,32 +1,20 @@
 package com.d954mas.habitrpgerapper.api.user.models;
 
 
-public class UserRegisterBody {
-    private String username;
-    private String password;
-    private String confirmPassword;
-    private String email;
+import com.google.auto.value.AutoValue;
 
-    public UserRegisterBody(String username, String password, String confirmPassword, String email) {
-        this.username = username;
-        this.password = password;
-        this.confirmPassword = confirmPassword;
-        this.email = email;
-    }
+@AutoValue
+public abstract class UserRegisterBody {
 
-    public String getUsername() {
-        return username;
-    }
+    public abstract String username();
 
-    public String getPassword() {
-        return password;
-    }
+    public abstract String password();
 
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
+    public abstract String confirmPassword();
 
-    public String getEmail() {
-        return email;
+    public abstract String email();
+
+    public static UserRegisterBody create(String username, String password, String confirmPassword, String email) {
+        return new AutoValue_UserRegisterBody(username, password, confirmPassword, email);
     }
 }

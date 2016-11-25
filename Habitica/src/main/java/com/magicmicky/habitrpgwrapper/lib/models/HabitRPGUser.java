@@ -1,7 +1,8 @@
 package com.magicmicky.habitrpgwrapper.lib.models;
 
-import com.google.gson.annotations.SerializedName;
+import android.text.TextUtils;
 
+import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.magicmicky.habitrpgwrapper.lib.models.invitations.Invitations;
@@ -16,8 +17,6 @@ import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
-
-import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.EnumMap;

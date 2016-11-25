@@ -246,7 +246,7 @@ public interface ApiService {
 
     @POST("members/send-private-message")
     Observable<PostChatMessageResult> postPrivateMessage(@Body HashMap<String, String> messageDetails);
-    
+
     @GET("shops/{identifier}")
     Observable<Shop> fetchShopInventory(@Path("identifier") String identifier);
 

@@ -84,6 +84,10 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             resValue "string", "content_provider", "com.habitrpg.android.habitica.fileprovider"
+            buildConfigField "String", "PORT", "80"
+            buildConfigField "String", "BASE_URL", "https://habitica.com"
+
+
         }
         debug {
             ext.enableCrashlytics = false
@@ -92,6 +96,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             applicationIdSuffix '.debug'
             resValue "string", "content_provider", "com.habitrpg.android.habitica.debug.fileprovider"
+            buildConfigField "String", "PORT", "3000"
+            buildConfigField "String", "BASE_URL", "localhost"
         }
     }
     lintOptions {
@@ -125,6 +131,8 @@ dependencies {
     }
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    provided "com.google.auto.value:auto-value:1.2"
+    apt "com.google.auto.value:auto-value:1.2"
     compile 'com.jakewharton.timber:timber:4.3.1'
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
@@ -200,24 +208,6 @@ if (dexCount) {
     }
 }
 
-// Add Habitica Properties to buildConfigField
-final File HRPG_PROPS_FILE = new File('habitica.properties')
-if (HRPG_PROPS_FILE.canRead()) {
-    def Properties HRPG_PROPS = new Properties()
-    HRPG_PROPS.load(new FileInputStream(HRPG_PROPS_FILE))
-
-    if (HRPG_PROPS != null) {
-        android.buildTypes.all { buildType ->
-            HRPG_PROPS.any { property ->
-                buildType.buildConfigField "String", property.key, "\"${property.value}\""
-            }
-        }
-    } else {
-        throw new InvalidUserDataException('habitica.properties found but some entries are missing')
-    }
-} else {
-    throw new MissingResourceException('habitica.properties not found')
-}
 
 
 

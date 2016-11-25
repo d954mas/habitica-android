@@ -80,6 +80,9 @@
 #keep models
 -keep class com.magicmicky.habitrpgwrapper.lib.models.** { *; }
 
+#fragment args
+-keep class com.hannesdorfmann.fragmentargs.** { *; }
+
 #eventbus
 -keepclassmembers class ** {
     @org.greenrobot.eventbus.Subscribe <methods>;

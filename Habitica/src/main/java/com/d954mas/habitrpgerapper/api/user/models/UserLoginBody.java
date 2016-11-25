@@ -1,21 +1,16 @@
 package com.d954mas.habitrpgerapper.api.user.models;
 
 
-public class UserLoginBody {
-    private String username;
-    private String password;
+import com.google.auto.value.AutoValue;
 
-    public UserLoginBody(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
+@AutoValue
+public abstract class UserLoginBody {
+    public abstract String username();
 
-    public String getUsername() {
-        return username;
-    }
+    public abstract String password();
 
-    public String getPassword() {
-        return password;
+    public static UserLoginBody create(String username, String password) {
+        return new AutoValue_UserLoginBody(username, password);
     }
 
 }
