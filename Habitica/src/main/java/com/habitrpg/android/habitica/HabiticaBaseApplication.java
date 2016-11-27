@@ -31,7 +31,7 @@ public abstract class HabiticaBaseApplication extends Application {
     //todo remove static
     public static HabitRPGUser User;
     private static AppComponent component;
-    @Inject Lazy<APIHelper> lazyApiHelper;
+    @Inject Lazy<APIHelperOld> lazyApiHelper;
     @Inject SharedPreferences sharedPrefs;
 
     public static void logout(Context context) {
@@ -113,9 +113,9 @@ public abstract class HabiticaBaseApplication extends Application {
         int lastInstalledVersion = sharedPrefs.getInt("last_installed_version", 0);
         if (lastInstalledVersion < info.versionCode) {
             sharedPrefs.edit().putInt("last_installed_version", info.versionCode).apply();
-            APIHelper apiHelper = this.lazyApiHelper.get();
+            APIHelperOld apiHelperOld = this.lazyApiHelper.get();
 
-            apiHelper.apiService.getContent(apiHelper.languageCode)
+            apiHelperOld.apiService.getContent(apiHelperOld.languageCode)
                     .compose(this.lazyApiHelper.get().configureApiCallObserver())
                     .subscribe(contentResult -> {
                     }, throwable -> {

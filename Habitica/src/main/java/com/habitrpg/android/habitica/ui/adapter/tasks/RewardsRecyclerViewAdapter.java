@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.adapter.tasks;
 import android.content.Context;
 import android.view.ViewGroup;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.APIHelperOld;
 import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
@@ -25,13 +25,13 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
 
     private final ContentCache contentCache;
     private final HabitRPGUser user;
-    private APIHelper apiHelper;
+    private APIHelperOld apiHelperOld;
 
-    public RewardsRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Context newContext, HabitRPGUser user, APIHelper apiHelper) {
+    public RewardsRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Context newContext, HabitRPGUser user, APIHelperOld apiHelperOld) {
         super(taskType, tagsHelper, layoutResource, newContext, user.getId());
         this.user = user;
-        this.apiHelper = apiHelper;
-        this.contentCache = new ContentCache(apiHelper);
+        this.apiHelperOld = apiHelperOld;
+        this.contentCache = new ContentCache(apiHelperOld);
     }
 
     @Override
@@ -40,8 +40,8 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
     }
 
     public void loadEquipmentRewards() {
-        if (apiHelper != null) {
-            apiHelper.apiService.getInventoryBuyableGear()
+        if (apiHelperOld != null) {
+            apiHelperOld.apiService.getInventoryBuyableGear()
                     .flatMap(items -> {
                         // get itemdata list
                         ArrayList<String> itemKeys = new ArrayList<>();
@@ -84,7 +84,7 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
                             });
                         });
                     })
-                    .compose(apiHelper.configureApiCallObserver())
+                    .compose(apiHelperOld.configureApiCallObserver())
                     .subscribe(items -> {
                         this.filteredContent.addAll(items);
                         notifyDataSetChanged();

@@ -98,7 +98,7 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 
-public class APIHelper implements Action1<Throwable> {
+public class APIHelperOld implements Action1<Throwable> {
     // I think we don't need the APIHelper anymore we could just use ApiService
     public final ApiService apiService;
     final Observable.Transformer<Observable, Observable> apiCallTransformer =
@@ -115,7 +115,7 @@ public class APIHelper implements Action1<Throwable> {
 
     //private OnHabitsAPIResult mResultListener;
     //private HostConfig mConfig;
-    public APIHelper(GsonConverterFactory gsonConverter, HostConfig hostConfig) {
+    public APIHelperOld(GsonConverterFactory gsonConverter, HostConfig hostConfig) {
         this.gsonConverter = gsonConverter;
         this.hostConfig = hostConfig;
         HabiticaBaseApplication.getComponent().inject(this);

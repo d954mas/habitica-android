@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.APIHelperOld;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
 import com.habitrpg.android.habitica.ui.AvatarView;
@@ -43,7 +43,7 @@ public class AvatarSetupFragment extends BaseFragmentOld {
     private HabitRPGUser user;
 
     @Inject
-    APIHelper apiHelper;
+    APIHelperOld apiHelperOld;
 
     @Nullable
     @Override
@@ -108,7 +108,7 @@ public class AvatarSetupFragment extends BaseFragmentOld {
 
         List<Customization> customizations = select.queryList();
         if (customizations.size() == 0) {
-            this.apiHelper.getContent().compose(this.apiHelper.configureApiCallObserver())
+            this.apiHelperOld.getContent().compose(this.apiHelperOld.configureApiCallObserver())
                     .subscribe(contentResult -> {
                         this.loadCustomizations();
                     }, throwable -> {});

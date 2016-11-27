@@ -14,7 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.APIHelperOld;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
@@ -51,7 +51,7 @@ public class ChatListFragment extends BaseFragmentOld implements SwipeRefreshLay
 
     public String seenGroupId;
     @Inject
-    public APIHelper apiHelper;
+    public APIHelperOld apiHelperOld;
     public boolean isTavern;
     @BindView(R.id.chat_list)
     RecyclerView mRecyclerView;
@@ -136,7 +136,7 @@ public class ChatListFragment extends BaseFragmentOld implements SwipeRefreshLay
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
 
-        apiHelper.apiService.listGroupChat(groupId).compose(apiHelper.configureApiCallObserver())
+        apiHelperOld.apiService.listGroupChat(groupId).compose(apiHelperOld.configureApiCallObserver())
                 .subscribe(this, throwable -> {
                 });
     }
@@ -154,8 +154,8 @@ public class ChatListFragment extends BaseFragmentOld implements SwipeRefreshLay
 
             gotNewMessages = false;
 
-            apiHelper.apiService.seenMessages(seenGroupId)
-                    .compose(apiHelper.configureApiCallObserver())
+            apiHelperOld.apiService.seenMessages(seenGroupId)
+                    .compose(apiHelperOld.configureApiCallObserver())
                     .subscribe(s -> {
                     }, throwable -> {
                     });
@@ -177,8 +177,8 @@ public class ChatListFragment extends BaseFragmentOld implements SwipeRefreshLay
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.chat_flag_confirmation)
                 .setPositiveButton(R.string.flag_confirm, (dialog, id) -> {
-                    apiHelper.apiService.flagMessage(cmd.groupId, cmd.chatMessage.id)
-                            .compose(apiHelper.configureApiCallObserver())
+                    apiHelperOld.apiService.flagMessage(cmd.groupId, cmd.chatMessage.id)
+                            .compose(apiHelperOld.configureApiCallObserver())
                             .subscribe(aVoid -> {
                                 MainActivity activity = (MainActivity) getActivity();
                                 UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Flagged message by " + cmd.chatMessage.user, UiUtils.SnackbarDisplayType.NORMAL);
@@ -192,7 +192,7 @@ public class ChatListFragment extends BaseFragmentOld implements SwipeRefreshLay
 
     @Subscribe
     public void onEvent(final ToggleLikeMessageCommand cmd) {
-        apiHelper.apiService.likeMessage(cmd.groupId, cmd.chatMessage.id).compose(apiHelper.configureApiCallObserver())
+        apiHelperOld.apiService.likeMessage(cmd.groupId, cmd.chatMessage.id).compose(apiHelperOld.configureApiCallObserver())
                 .subscribe(voids -> {
                 }, throwable -> {
                 });
@@ -200,8 +200,8 @@ public class ChatListFragment extends BaseFragmentOld implements SwipeRefreshLay
 
     @Subscribe
     public void onEvent(final DeleteChatMessageCommand cmd) {
-        apiHelper.apiService.deleteMessage(cmd.groupId, cmd.chatMessage.id)
-                .compose(apiHelper.configureApiCallObserver())
+        apiHelperOld.apiService.deleteMessage(cmd.groupId, cmd.chatMessage.id)
+                .compose(apiHelperOld.configureApiCallObserver())
                 .subscribe(aVoid -> {
                     if (currentChatMessages != null) {
                         currentChatMessages.remove(cmd.chatMessage);
@@ -216,8 +216,8 @@ public class ChatListFragment extends BaseFragmentOld implements SwipeRefreshLay
     public void onEvent(SendNewGroupMessageCommand cmd) {
         HashMap<String, String> messageObject = new HashMap<>();
         messageObject.put("message", cmd.Message);
-        apiHelper.apiService.postGroupChat(cmd.TargetGroupId, messageObject)
-                .compose(apiHelper.configureApiCallObserver())
+        apiHelperOld.apiService.postGroupChat(cmd.TargetGroupId, messageObject)
+                .compose(apiHelperOld.configureApiCallObserver())
                 .subscribe(postChatMessageResult -> {
                     if (currentChatMessages != null) {
                         currentChatMessages.add(0, postChatMessageResult.message);
@@ -233,7 +233,7 @@ public class ChatListFragment extends BaseFragmentOld implements SwipeRefreshLay
     // If the ChatList is Tavern, we're able to toggle the sleep-mode
     @Subscribe
     public void onEvent(ToggleInnCommand event) {
-        apiHelper.apiService.sleep().compose(apiHelper.configureApiCallObserver())
+        apiHelperOld.apiService.sleep().compose(apiHelperOld.configureApiCallObserver())
                 .subscribe(aVoid -> {
                     ToggledInnStateEvent innState = new ToggledInnStateEvent();
                     innState.Inn = !user.getPreferences().getSleep();

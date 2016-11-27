@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.APIHelperOld;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
@@ -20,7 +20,7 @@ import javax.inject.Inject;
  */
 public class LocalNotificationActionReceiver extends BroadcastReceiver implements HabitRPGUserCallback.OnUserReceived {
     @Inject
-    public APIHelper apiHelper;
+    public APIHelperOld apiHelperOld;
 
     private HabitRPGUser user;
     private String action;
@@ -37,8 +37,8 @@ public class LocalNotificationActionReceiver extends BroadcastReceiver implement
         this.intent = intent;
         this.context = context;
 
-        this.apiHelper.apiService.getUser()
-                .compose(this.apiHelper.configureApiCallObserver())
+        this.apiHelperOld.apiService.getUser()
+                .compose(this.apiHelperOld.configureApiCallObserver())
                 .subscribe(new HabitRPGUserCallback(this), throwable -> {});
     }
 
@@ -56,40 +56,40 @@ public class LocalNotificationActionReceiver extends BroadcastReceiver implement
         if (action.equals(this.resources.getString(R.string.accept_party_invite))) {
             if (this.user.getInvitations().getParty() == null) return;
             String partyId = this.user.getInvitations().getParty().getId();
-            apiHelper.apiService.joinGroup(partyId)
-                    .compose(apiHelper.configureApiCallObserver())
+            apiHelperOld.apiService.joinGroup(partyId)
+                    .compose(apiHelperOld.configureApiCallObserver())
                     .subscribe(aVoid -> {}, throwable -> {});
         } else if (action.equals(this.resources.getString(R.string.reject_party_invite))) {
             if (this.user.getInvitations().getParty() == null) return;
             String partyId = this.user.getInvitations().getParty().getId();
-            apiHelper.apiService.rejectGroupInvite(partyId)
-                    .compose(apiHelper.configureApiCallObserver())
+            apiHelperOld.apiService.rejectGroupInvite(partyId)
+                    .compose(apiHelperOld.configureApiCallObserver())
                     .subscribe(aVoid -> {}, throwable -> {});
         } else if (action.equals(this.resources.getString(R.string.accept_quest_invite))) {
             if (this.user.getParty() == null) return;
             String partyId = this.user.getParty().getId();
-            apiHelper.apiService.acceptQuest(partyId)
-                    .compose(apiHelper.configureApiCallObserver())
+            apiHelperOld.apiService.acceptQuest(partyId)
+                    .compose(apiHelperOld.configureApiCallObserver())
                     .subscribe(aVoid -> {}, throwable -> {});
         } else if (action.equals(this.resources.getString(R.string.reject_quest_invite))) {
             if (this.user.getParty() == null) return;
             String partyId = this.user.getParty().getId();
-            apiHelper.apiService.rejectQuest(partyId)
-                    .compose(apiHelper.configureApiCallObserver())
+            apiHelperOld.apiService.rejectQuest(partyId)
+                    .compose(apiHelperOld.configureApiCallObserver())
                     .subscribe(aVoid -> {}, throwable -> {});
         } else if (action.equals(this.resources.getString(R.string.accept_guild_invite))) {
             Bundle extras = this.intent.getExtras();
             String guildId = extras.getString("groupID");
             if (guildId == null) return;
-            apiHelper.apiService.joinGroup(guildId)
-                    .compose(apiHelper.configureApiCallObserver())
+            apiHelperOld.apiService.joinGroup(guildId)
+                    .compose(apiHelperOld.configureApiCallObserver())
                     .subscribe(aVoid -> {}, throwable -> {});
         } else if (action.equals(this.resources.getString(R.string.reject_guild_invite))) {
             Bundle extras = this.intent.getExtras();
             String guildId = extras.getString("groupID");
             if (guildId == null) return;
-            apiHelper.apiService.rejectGroupInvite(guildId)
-                    .compose(apiHelper.configureApiCallObserver())
+            apiHelperOld.apiService.rejectGroupInvite(guildId)
+                    .compose(apiHelperOld.configureApiCallObserver())
                     .subscribe(aVoid -> {}, throwable -> {});
         }
     }

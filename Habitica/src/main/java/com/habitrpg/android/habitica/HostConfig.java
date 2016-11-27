@@ -12,7 +12,6 @@ import android.preference.PreferenceManager;
  */
 public class HostConfig {
     private String address;
-    private int port;
     private String api;
     private String user;
 
@@ -23,25 +22,23 @@ public class HostConfig {
         this.user = prefs.getString(context.getString(R.string.SP_userID), null);
     }
 
+    public HostConfig(String address, String api, String user) {
+        this.address = address;
+        this.api = api;
+        this.user = user;
+    }
 
     public String getAddress() {
         return address;
-    }
-
-
-    public int getPort() {
-        return port;
     }
 
     public String getApi() {
         return api;
     }
 
-
     public void setApi(String api) {
         this.api = api;
     }
-
 
     public String getUser() {
         return user;

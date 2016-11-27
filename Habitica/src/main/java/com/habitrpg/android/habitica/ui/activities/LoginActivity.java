@@ -20,7 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.APIHelperOld;
 import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
@@ -46,7 +46,7 @@ public class LoginActivity extends BaseActivity
     private final static String TAG_APIKEY = "key";
 
 
-    @Inject public APIHelper apiHelper;
+    @Inject public APIHelperOld apiHelperOld;
     @Inject public SharedPreferences sharedPrefs;
     public String mTmpUserToken;
     public String mTmpApiToken;
@@ -75,8 +75,8 @@ public class LoginActivity extends BaseActivity
                     showValidationError(R.string.login_validation_error_fieldsmissing);
                     return;
                 }
-                apiHelper.registerUser(username, email, password, cpassword)
-                        .compose(apiHelper.configureApiCallObserver())
+                apiHelperOld.registerUser(username, email, password, cpassword)
+                        .compose(apiHelperOld.configureApiCallObserver())
                         .subscribe(LoginActivity.this, throwable -> {
                             hideProgress();
                         });
@@ -88,8 +88,8 @@ public class LoginActivity extends BaseActivity
                     showValidationError(R.string.login_validation_error_fieldsmissing);
                     return;
                 }
-                apiHelper.connectUser(username, password)
-                        .compose(apiHelper.configureApiCallObserver())
+                apiHelperOld.connectUser(username, password)
+                        .compose(apiHelperOld.configureApiCallObserver())
                         .subscribe(LoginActivity.this, throwable -> {
                             hideProgress();
                         });
@@ -246,7 +246,7 @@ public class LoginActivity extends BaseActivity
     }
 
     private void saveTokens(String api, String user) throws Exception {
-        this.apiHelper.updateAuthenticationCredentials(user, api);
+        this.apiHelperOld.updateAuthenticationCredentials(user, api);
         SharedPreferences.Editor editor = sharedPrefs.edit();
         boolean ans = editor.putString(getString(R.string.SP_APIToken), api)
                 .putString(getString(R.string.SP_userID), user)

@@ -59,8 +59,8 @@ public class PartyFragment extends BaseMainFragment {
 
         // Get the full group data
         if (this.user != null && this.user.getParty() != null && this.user.getParty().id != null) {
-            apiHelper.apiService.getGroup("party")
-                    .compose(this.apiHelper.configureApiCallObserver())
+            apiHelperOld.apiService.getGroup("party")
+                    .compose(this.apiHelperOld.configureApiCallObserver())
                     .subscribe(group -> {
                         if (group == null) {
                             return;
@@ -69,8 +69,8 @@ public class PartyFragment extends BaseMainFragment {
 
                         updateGroupUI();
 
-                        apiHelper.apiService.getGroupMembers(group.id, true)
-                                .compose(apiHelper.configureApiCallObserver())
+                        apiHelperOld.apiService.getGroupMembers(group.id, true)
+                                .compose(apiHelperOld.configureApiCallObserver())
                                 .subscribe(members -> {
                                             PartyFragment.this.group.members = members;
                                             updateGroupUI();
@@ -161,7 +161,7 @@ public class PartyFragment extends BaseMainFragment {
                 this.displayEditForm();
                 return true;
             case R.id.menu_guild_leave:
-                this.apiHelper.apiService.leaveGroup(this.group.id).compose(apiHelper.configureApiCallObserver())
+                this.apiHelperOld.apiService.leaveGroup(this.group.id).compose(apiHelperOld.configureApiCallObserver())
                         .subscribe(group -> {
                             getActivity().getSupportFragmentManager().beginTransaction().remove(PartyFragment.this).commit();
                         }, throwable -> {
@@ -210,8 +210,8 @@ public class PartyFragment extends BaseMainFragment {
                         needsSaving = true;
                     }
                     if (needsSaving) {
-                        this.apiHelper.apiService.updateGroup(this.group.id, this.group)
-                                .compose(apiHelper.configureApiCallObserver())
+                        this.apiHelperOld.apiService.updateGroup(this.group.id, this.group)
+                                .compose(apiHelperOld.configureApiCallObserver())
                                 .subscribe(aVoid -> {
                                 }, throwable -> {
                                 });
@@ -240,8 +240,8 @@ public class PartyFragment extends BaseMainFragment {
                         Collections.addAll(invites, userIDs);
                         inviteData.put("uuids", invites);
                     }
-                    this.apiHelper.apiService.inviteToGroup(this.group.id, inviteData)
-                            .compose(apiHelper.configureApiCallObserver())
+                    this.apiHelperOld.apiService.inviteToGroup(this.group.id, inviteData)
+                            .compose(apiHelperOld.configureApiCallObserver())
                             .subscribe(aVoid -> {
                             }, throwable -> {
                             });

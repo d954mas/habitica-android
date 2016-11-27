@@ -174,8 +174,8 @@ public class SkillsFragment extends BaseMainFragment {
             message.append(" + ").append(round(event.gold, 2)).append(" GP");
         }
         UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), message.toString(), UiUtils.SnackbarDisplayType.NORMAL);
-        apiHelper.apiService.getUser()
-                .compose(apiHelper.configureApiCallObserver())
+        apiHelperOld.apiService.getUser()
+                .compose(apiHelperOld.configureApiCallObserver())
                 .subscribe(new MergeUserCallback(activity, user), throwable -> {
                 });
     }
@@ -207,11 +207,11 @@ public class SkillsFragment extends BaseMainFragment {
         displayProgressDialog();
         Observable<SkillResponse> observable;
         if (taskId != null) {
-            observable = apiHelper.apiService.useSkill(skill.key, skill.target, taskId);
+            observable = apiHelperOld.apiService.useSkill(skill.key, skill.target, taskId);
         } else {
-            observable = apiHelper.apiService.useSkill(skill.key, skill.target);
+            observable = apiHelperOld.apiService.useSkill(skill.key, skill.target);
         }
-        observable.compose(apiHelper.configureApiCallObserver())
+        observable.compose(apiHelperOld.configureApiCallObserver())
                 .subscribe(new SkillCallback(activity, user, skill), throwable -> {
                     removeProgressDialog();
                 });

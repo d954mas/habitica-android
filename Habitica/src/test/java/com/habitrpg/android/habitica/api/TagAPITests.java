@@ -1,15 +1,16 @@
 package com.habitrpg.android.habitica.api;
 
+import android.os.Build;
+
 import com.habitrpg.android.habitica.BuildConfig;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 
 import junit.framework.Assert;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
-
-import android.os.Build;
 
 import java.util.UUID;
 
@@ -24,7 +25,7 @@ public class TagAPITests extends BaseAPITests {
         TestSubscriber<Tag> testSubscriber = new TestSubscriber<>();
         Tag tag = new Tag();
         tag.setName("foo");
-        apiHelper.apiService.createTag(tag).subscribe(testSubscriber);
+        apiHelperOld.apiService.createTag(tag).subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
         testSubscriber.assertValueCount(1);
@@ -42,7 +43,7 @@ public class TagAPITests extends BaseAPITests {
 
         //Attempt to update the test user's first tag
         String testId = getUser().getTags().get(0).getId();
-        apiHelper.apiService.updateTag(testId,t).subscribe(testSubscriber);
+        apiHelperOld.apiService.updateTag(testId, t).subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
         Assert.assertEquals(newname,testSubscriber.getOnNextEvents().get(0).getName());
@@ -54,7 +55,7 @@ public class TagAPITests extends BaseAPITests {
         TestSubscriber<Void> testSub = new TestSubscriber<>();
 
         String testId = getUser().getTags().get(0).getId();
-        apiHelper.apiService.deleteTag(testId).subscribe(testSub);
+        apiHelperOld.apiService.deleteTag(testId).subscribe(testSub);
         testSub.assertNoErrors();
         testSub.assertCompleted();
     }

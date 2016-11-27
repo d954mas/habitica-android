@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.APIHelperOld;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
 import com.habitrpg.android.habitica.ui.AvatarView;
@@ -38,7 +38,7 @@ public class ClassSelectionActivity extends BaseActivityOld implements Action1<H
     AvatarView warriorAvatarView;
 
     @Inject
-    APIHelper apiHelper;
+    APIHelperOld apiHelperOld;
 
     ProgressDialog progressDialog;
 
@@ -100,8 +100,8 @@ public class ClassSelectionActivity extends BaseActivityOld implements Action1<H
         warriorAvatarView.setUser(warrior);
 
         if (!isInitialSelection) {
-            apiHelper.apiService.changeClass()
-                    .compose(apiHelper.configureApiCallObserver())
+            apiHelperOld.apiService.changeClass()
+                    .compose(apiHelperOld.configureApiCallObserver())
                     .subscribe(user -> {
                         classWasUnset = true;
                     }, throwable -> {
@@ -178,8 +178,8 @@ public class ClassSelectionActivity extends BaseActivityOld implements Action1<H
     private void optOutOfClasses() {
         shouldFinish = true;
         this.displayProgressDialog();
-        apiHelper.apiService.disableClasses()
-                .compose(apiHelper.configureApiCallObserver())
+        apiHelperOld.apiService.disableClasses()
+                .compose(apiHelperOld.configureApiCallObserver())
                 .subscribe(this, throwable -> {
                 });
     }
@@ -187,8 +187,8 @@ public class ClassSelectionActivity extends BaseActivityOld implements Action1<H
     private void selectClass(String selectedClass) {
         shouldFinish = true;
         this.displayProgressDialog();
-        apiHelper.apiService.changeClass(selectedClass)
-                .compose(apiHelper.configureApiCallObserver())
+        apiHelperOld.apiService.changeClass(selectedClass)
+                .compose(apiHelperOld.configureApiCallObserver())
                 .subscribe(this, throwable -> {
                 });
     }

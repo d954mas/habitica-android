@@ -17,11 +17,11 @@ import rx.schedulers.Schedulers;
 
 
 public class ContentCache {
-    private APIHelper apiHelper;
+    private APIHelperOld apiHelperOld;
 
 
-    public ContentCache(APIHelper apiHelper) {
-        this.apiHelper = apiHelper;
+    public ContentCache(APIHelperOld apiHelperOld) {
+        this.apiHelperOld = apiHelperOld;
     }
 
     public void GetQuestContent(final String key, final QuestContentCallback cb) {
@@ -71,7 +71,7 @@ public class ContentCache {
     }
 
     private <T> void getContentAndSearchFor(final String typeOfSearch, final String searchKey, final GotContentEntryCallback<T> gotEntry) {
-        apiHelper.getContent()
+        apiHelperOld.getContent()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(contentResult -> {
@@ -115,7 +115,7 @@ public class ContentCache {
 
     private void getContentAndSearchForList(final String typeOfSearch, final List<String> searchKeys, final GotContentEntryCallback<List<ItemData>> gotEntry) {
         List<ItemData> resultList = new ArrayList<>();
-        apiHelper.getContent()
+        apiHelperOld.getContent()
                 .flatMap(contentResult -> {
                     List<ItemData> itemList = new ArrayList<ItemData>(contentResult.gear.flat);
                     itemList.add(contentResult.potion);

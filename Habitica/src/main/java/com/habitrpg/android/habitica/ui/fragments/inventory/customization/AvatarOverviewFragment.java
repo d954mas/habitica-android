@@ -60,9 +60,9 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (this.apiHelper != null) {
-            this.apiHelper.apiService.getContent(apiHelper.languageCode)
-                    .compose(apiHelper.configureApiCallObserver())
+        if (this.apiHelperOld != null) {
+            this.apiHelperOld.apiService.getContent(apiHelperOld.languageCode)
+                    .compose(apiHelperOld.configureApiCallObserver())
                     .subscribe(contentResult -> {
                     }, throwable -> {
                     });
@@ -142,8 +142,8 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
         if (!this.user.getPreferences().getSize().equals(newSize)) {
             Map<String, Object> updateData = new HashMap<>();
             updateData.put("preferences.size", newSize);
-            apiHelper.apiService.updateUser(updateData)
-                    .compose(apiHelper.configureApiCallObserver())
+            apiHelperOld.apiService.updateUser(updateData)
+                    .compose(apiHelperOld.configureApiCallObserver())
                     .subscribe(new MergeUserCallback(activity, user), throwable -> {
                     });
         }

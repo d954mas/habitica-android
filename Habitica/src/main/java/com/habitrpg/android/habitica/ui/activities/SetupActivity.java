@@ -10,7 +10,7 @@ import android.support.v7.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.APIHelperOld;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
@@ -40,7 +40,7 @@ import butterknife.BindView;
 public class SetupActivity extends BaseActivityOld implements View.OnClickListener, ViewPager.OnPageChangeListener, HabitRPGUserCallback.OnUserReceived {
 
     @Inject
-    public APIHelper apiHelper;
+    public APIHelperOld apiHelperOld;
     @Inject
     protected HostConfig hostConfig;
     @BindView(R.id.view_pager)
@@ -77,8 +77,8 @@ public class SetupActivity extends BaseActivityOld implements View.OnClickListen
         String currentDeviceLanguage = Locale.getDefault().getLanguage();
         for (String language : getResources().getStringArray(R.array.LanguageValues)) {
             if (language.equals(currentDeviceLanguage)) {
-                apiHelper.apiService.registrationLanguage(currentDeviceLanguage)
-                        .compose(apiHelper.configureApiCallObserver())
+                apiHelperOld.apiService.registrationLanguage(currentDeviceLanguage)
+                        .compose(apiHelperOld.configureApiCallObserver())
                         .subscribe(new MergeUserCallback(this, user), throwable -> {
                         });
             }
@@ -99,8 +99,8 @@ public class SetupActivity extends BaseActivityOld implements View.OnClickListen
             if (this.user != null) {
                 setupViewpager();
             } else {
-                this.apiHelper.apiService.getUser()
-                        .compose(this.apiHelper.configureApiCallObserver())
+                this.apiHelperOld.apiService.getUser()
+                        .compose(this.apiHelperOld.configureApiCallObserver())
                         .subscribe(new HabitRPGUserCallback(this), throwable -> {
                         });
             }
@@ -146,8 +146,8 @@ public class SetupActivity extends BaseActivityOld implements View.OnClickListen
 
     @Subscribe
     public void onEvent(UpdateUserCommand event) {
-        this.apiHelper.apiService.updateUser(event.updateData)
-                .compose(this.apiHelper.configureApiCallObserver())
+        this.apiHelperOld.apiService.updateUser(event.updateData)
+                .compose(this.apiHelperOld.configureApiCallObserver())
                 .subscribe(new MergeUserCallback(this, user), throwable -> {
                 });
     }
@@ -163,8 +163,8 @@ public class SetupActivity extends BaseActivityOld implements View.OnClickListen
             if (this.pager.getCurrentItem() == 1) {
                 List<Task> newTasks = this.taskSetupFragment.createSampleTasks();
                 this.completedSetup = true;
-                this.apiHelper.apiService.createTasks(newTasks)
-                        .compose(this.apiHelper.configureApiCallObserver())
+                this.apiHelperOld.apiService.createTasks(newTasks)
+                        .compose(this.apiHelperOld.configureApiCallObserver())
                         .subscribe(tasks -> {
                             onUserReceived(user);
                         }, throwable -> {

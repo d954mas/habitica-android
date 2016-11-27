@@ -84,7 +84,7 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             resValue "string", "content_provider", "com.habitrpg.android.habitica.fileprovider"
-            buildConfigField "String", "BASE_URL", "\"https://habitica.com\""
+            buildConfigField "String", "BASE_URL", "\"https://habitica.com/\""
 
 
         }
@@ -95,7 +95,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             applicationIdSuffix '.debug'
             resValue "string", "content_provider", "com.habitrpg.android.habitica.debug.fileprovider"
-            buildConfigField "String", "BASE_URL", "\"http://localhost:3000\""
+            buildConfigField "String", "BASE_URL", "\"http://localhost:3000/\""
         }
     }
     lintOptions {
@@ -136,6 +136,7 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.google.dagger:dagger:2.7'
     apt 'com.google.dagger:dagger-compiler:2.7'
+    testApt 'com.google.dagger:dagger-compiler:2.7'
     provided 'javax.annotation:jsr250-api:1.0'
     compile 'com.hannesdorfmann.fragmentargs:annotation:3.0.2'
     apt 'com.hannesdorfmann.fragmentargs:processor:3.0.2'

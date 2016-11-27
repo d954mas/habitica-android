@@ -21,7 +21,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.image.ImageInfo;
-import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.APIHelperOld;
 import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
@@ -54,7 +54,7 @@ public class FullProfileActivity extends BaseActivityOld {
     ContentCache contentCache;
 
     @Inject
-    APIHelper apiHelper;
+    APIHelperOld apiHelperOld;
 
     @BindView(R.id.profile_image)
     SimpleDraweeView profile_image;
@@ -121,8 +121,8 @@ public class FullProfileActivity extends BaseActivityOld {
 
         setTitle(R.string.profile_loading_data);
 
-        apiHelper.apiService.GetMember(this.userId)
-                .compose(apiHelper.configureApiCallObserver())
+        apiHelperOld.apiService.GetMember(this.userId)
+                .compose(apiHelperOld.configureApiCallObserver())
                 .subscribe(this::updateView,
                         throwable -> {
                         });
@@ -172,8 +172,8 @@ public class FullProfileActivity extends BaseActivityOld {
                     messageObject.put("message", emojiEditText.getText().toString());
                     messageObject.put("toUserId", userId);
 
-                    apiHelper.apiService.postPrivateMessage(messageObject)
-                            .compose(apiHelper.configureApiCallObserver())
+                    apiHelperOld.apiService.postPrivateMessage(messageObject)
+                            .compose(apiHelperOld.configureApiCallObserver())
                             .subscribe(postChatMessageResult -> {
                                 UiUtils.showSnackbar(FullProfileActivity.this, FullProfileActivity.this.fullprofile_scrollview,
                                         String.format(getString(R.string.profile_message_sent_to), userName), UiUtils.SnackbarDisplayType.NORMAL);

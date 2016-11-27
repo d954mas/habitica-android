@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.APIHelperOld;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.PushDevice;
@@ -30,7 +30,7 @@ public class PushNotificationManager {
     public static String WON_CHALLENGE_PUSH_NOTIFICATION_KEY = "wonChallenge";
     private static PushNotificationManager instance = null;
     @Inject
-    public APIHelper apiHelper;
+    public APIHelperOld apiHelperOld;
 
     private String refreshedToken;
     private SharedPreferences sharedPreferences;
@@ -89,14 +89,14 @@ public class PushNotificationManager {
         Map<String, String> pushDeviceData = new HashMap<String, String>();
         pushDeviceData.put("regId", this.refreshedToken);
         pushDeviceData.put("type", "android");
-        apiHelper.apiService.addPushDevice(pushDeviceData)
-            .compose(apiHelper.configureApiCallObserver())
+        apiHelperOld.apiService.addPushDevice(pushDeviceData)
+                .compose(apiHelperOld.configureApiCallObserver())
             .subscribe(aVoid -> {}, throwable -> {});
     }
 
     public void removePushDeviceUsingStoredToken () {
-        apiHelper.apiService.deletePushDevice(this.refreshedToken)
-            .compose(apiHelper.configureApiCallObserver())
+        apiHelperOld.apiService.deletePushDevice(this.refreshedToken)
+                .compose(apiHelperOld.configureApiCallObserver())
             .subscribe(aVoid -> {}, throwable -> {});
     }
 

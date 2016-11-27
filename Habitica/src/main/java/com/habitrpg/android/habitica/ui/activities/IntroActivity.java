@@ -8,7 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.APIHelperOld;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragmentBuilder;
@@ -19,7 +19,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 
 public class IntroActivity extends BaseActivity {
-    @Inject public APIHelper apiHelper;
+    @Inject public APIHelperOld apiHelperOld;
     @BindView(R.id.vp) ViewPager pager;
     @BindView(R.id.vpIndicator) CirclePageIndicator indicator;
     @BindView(R.id.btnSkip) Button skipButton;

@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.APIHelperOld;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
 import com.habitrpg.android.habitica.events.commands.SelectMemberCommand;
@@ -27,7 +27,7 @@ public class SkillMemberActivity extends BaseActivityOld {
     RecyclerView recyclerView;
 
     @Inject
-    public APIHelper apiHelper;
+    public APIHelperOld apiHelperOld;
 
     @Override
     protected int getLayoutResId() {
@@ -54,15 +54,15 @@ public class SkillMemberActivity extends BaseActivityOld {
         viewAdapter.context = this;
         recyclerView.setAdapter(viewAdapter);
 
-        apiHelper.apiService.getGroup("party")
-                .compose(this.apiHelper.configureApiCallObserver())
+        apiHelperOld.apiService.getGroup("party")
+                .compose(this.apiHelperOld.configureApiCallObserver())
                 .subscribe(group -> {
                             if (group == null) {
                                 return;
                             }
 
-                            apiHelper.apiService.getGroupMembers(group.id, true)
-                                    .compose(apiHelper.configureApiCallObserver())
+                            apiHelperOld.apiService.getGroupMembers(group.id, true)
+                                    .compose(apiHelperOld.configureApiCallObserver())
                                     .subscribe(members -> {
                                                 viewAdapter.setMemberList(members, true);
                                             },

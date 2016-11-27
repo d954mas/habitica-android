@@ -35,8 +35,8 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
             this.guildInformationFragment.setGroup(guild);
         }
         if (this.guild.chat == null) {
-            if (this.apiHelper != null) {
-                apiHelper.apiService.getGroup(this.guild.id).compose(apiHelper.configureApiCallObserver())
+            if (this.apiHelperOld != null) {
+                apiHelperOld.apiService.getGroup(this.guild.id).compose(apiHelperOld.configureApiCallObserver())
                         .subscribe(this, throwable -> {
                         });
             }
@@ -67,8 +67,8 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (this.apiHelper != null && this.guild != null) {
-            apiHelper.apiService.getGroup(this.guild.id).compose(apiHelper.configureApiCallObserver())
+        if (this.apiHelperOld != null && this.guild != null) {
+            apiHelperOld.apiService.getGroup(this.guild.id).compose(apiHelperOld.configureApiCallObserver())
                     .subscribe(this, throwable -> {
                     });
         }
@@ -94,13 +94,13 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
 
         switch (id) {
             case R.id.menu_guild_join:
-                this.apiHelper.apiService.joinGroup(this.guild.id).compose(apiHelper.configureApiCallObserver())
+                this.apiHelperOld.apiService.joinGroup(this.guild.id).compose(apiHelperOld.configureApiCallObserver())
                         .subscribe(this, throwable -> {
                         });
                 this.isMember = true;
                 return true;
             case R.id.menu_guild_leave:
-                this.apiHelper.apiService.leaveGroup(this.guild.id).compose(apiHelper.configureApiCallObserver())
+                this.apiHelperOld.apiService.leaveGroup(this.guild.id).compose(apiHelperOld.configureApiCallObserver())
                         .subscribe(aVoid -> {
                             this.activity.supportInvalidateOptionsMenu();
                         }, throwable -> {
@@ -224,8 +224,8 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
                         needsSaving = true;
                     }
                     if (needsSaving) {
-                        this.apiHelper.apiService.updateGroup(this.guild.id, this.guild)
-                                .compose(apiHelper.configureApiCallObserver())
+                        this.apiHelperOld.apiService.updateGroup(this.guild.id, this.guild)
+                                .compose(apiHelperOld.configureApiCallObserver())
                                 .subscribe(aVoid -> {
                                 }, throwable -> {
                                 });

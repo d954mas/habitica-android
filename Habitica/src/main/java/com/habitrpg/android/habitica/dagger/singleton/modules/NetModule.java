@@ -1,10 +1,10 @@
 package com.habitrpg.android.habitica.dagger.singleton.modules;
 
 import com.d954mas.habitrpgerapper.api.UserId;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.habitrpg.android.habitica.BuildConfig;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import javax.inject.Singleton;
 
@@ -16,7 +16,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
-import timber.log.Timber;
 
 @Module
 public class NetModule {
@@ -32,14 +31,13 @@ public class NetModule {
             Response response = chain.proceed(chain.request());
             String stringJson = response.body().string();
             String dataString = null;
-            try {
-                JSONObject jsonObject = new JSONObject(stringJson);
-                if (jsonObject.has("data")) dataString = jsonObject.getString("data");
-            } catch (JSONException e) {
-                Timber.e(e);
-            }
+            Gson gson = new Gson();
+            JsonElement jsonElement = gson.fromJson(stringJson, JsonElement.class);
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
+            if (jsonObject.has("data")) dataString = jsonObject.get("data").getAsString();
             if (dataString == null) {
-                return response;
+                ResponseBody body = ResponseBody.create(response.body().contentType(), stringJson);
+                return response.newBuilder().body(body).build();
             } else {
                 ResponseBody body = ResponseBody.create(response.body().contentType(), dataString);
                 return response.newBuilder().body(body).build();

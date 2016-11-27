@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.dagger.singleton.components;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.APIHelperOld;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
-import com.habitrpg.android.habitica.dagger.singleton.modules.ApiModule;
+import com.habitrpg.android.habitica.dagger.singleton.modules.ApiModuleOld;
 import com.habitrpg.android.habitica.dagger.singleton.modules.AppModule;
 import com.habitrpg.android.habitica.dagger.singleton.modules.DeveloperModule;
 import com.habitrpg.android.habitica.dagger.singleton.modules.NetModule;
@@ -76,7 +76,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {AppModule.class, ApiModule.class, DeveloperModule.class, NetModule.class})
+@Component(modules = {AppModule.class, ApiModuleOld.class, DeveloperModule.class, NetModule.class})
 public interface AppComponent {
 
     void inject(ClassSelectionActivity classSelectionActivity);
@@ -181,7 +181,7 @@ public interface AppComponent {
 
     void inject(SoundManager soundManager);
 
-    void inject(APIHelper apiHelper);
+    void inject(APIHelperOld apiHelperOld);
 
     //void inject(BaseTasksRecyclerViewAdapter vhBaseTasksRecyclerViewAdapter);
 

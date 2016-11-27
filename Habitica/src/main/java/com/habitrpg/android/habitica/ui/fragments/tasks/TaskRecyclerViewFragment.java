@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.APIHelperOld;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
@@ -47,7 +47,7 @@ public class TaskRecyclerViewFragment extends BaseFragmentOld implements View.On
     @Named("UserID")
     String userID;
     @Inject
-    APIHelper apiHelper;
+    APIHelperOld apiHelperOld;
     @Inject
     TagsHelper tagsHelper;
     LinearLayoutManager layoutManager = null;
@@ -93,7 +93,7 @@ public class TaskRecyclerViewFragment extends BaseFragmentOld implements View.On
                     return;
                 case Task.TYPE_REWARD:
                     layoutOfType = R.layout.reward_item_card;
-                    this.recyclerAdapter = new RewardsRecyclerViewAdapter(Task.TYPE_REWARD, tagsHelper, layoutOfType, getContext(), user, apiHelper);
+                    this.recyclerAdapter = new RewardsRecyclerViewAdapter(Task.TYPE_REWARD, tagsHelper, layoutOfType, getContext(), user, apiHelperOld);
                     break;
             }
         }

@@ -12,7 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.APIHelperOld;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.dagger.singleton.components.AppComponent;
@@ -45,7 +45,7 @@ public class PartyInviteActivity extends BaseActivityOld {
     private String userIdToInvite;
 
     @Inject
-    APIHelper apiHelper;
+    APIHelperOld apiHelperOld;
 
     @Inject
     protected HostConfig hostConfig;
@@ -207,8 +207,8 @@ public class PartyInviteActivity extends BaseActivityOld {
         invites.add(userIdToInvite);
         inviteData.put("uuids", invites);
 
-        this.apiHelper.apiService.inviteToGroup(this.user.getParty().getId(), inviteData)
-                .compose(apiHelper.configureApiCallObserver())
+        this.apiHelperOld.apiService.inviteToGroup(this.user.getParty().getId(), inviteData)
+                .compose(apiHelperOld.configureApiCallObserver())
                 .subscribe(aVoid -> {
                 }, throwable -> {
                 });

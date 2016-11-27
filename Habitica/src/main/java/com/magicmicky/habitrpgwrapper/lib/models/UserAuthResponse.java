@@ -26,10 +26,6 @@ public class UserAuthResponse {
         return apiToken;
     }
 
-    public void setApiToken(String apiToken) {
-        this.apiToken = apiToken;
-    }
-
     public String getId() {
         return id;
     }
@@ -40,9 +36,5 @@ public class UserAuthResponse {
 
     public Boolean getNewUser() {
         return newUser;
-    }
-
-    public void setNewUser(Boolean newUser) {
-        this.newUser = newUser;
     }
 }
